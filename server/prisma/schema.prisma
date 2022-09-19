@@ -8,17 +8,90 @@ datasource db {
 }
 
 model User {
-  id    String  @id @default(uuid())
-  email String  @unique
-  name  String?
-  posts Post[]
+  id         String      @id @default(uuid())
+  timestamp  DateTime    @default(now())
+  email      String      @unique
+  password   String
+  salt       String
+  name       String?
+  timetables Timetable[]
+  tasks      Task[]
+  notes      Note[]
 }
 
-model Post {
-  id        String  @id @default(uuid())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorID], references: [id])
-  authorID  String
+model Timetable {
+  id        String    @id @default(uuid())
+  timestamp DateTime  @default(now())
+  subjects  Subject[]
+  owner     User      @relation(fields: [ownerID], references: [id])
+  ownerID   String
+}
+
+model Subject {
+  id          String            @id @default(uuid())
+  timestamp   DateTime          @default(now())
+  name        String
+  color       String
+  timetable   Timetable         @relation(fields: [timetableID], references: [id])
+  timetableID String
+  instances   SubjectInstance[]
+  tasks       Task[]
+}
+
+model SubjectInstance {
+  id        String   @id @default(uuid())
+  timestamp DateTime @default(now())
+  subject   Subject  @relation(fields: [subjectID], references: [id])
+  subjectID String
+  day       String
+  time      String
+  room      String?
+  teacher   String?
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  timestamp   DateTime @default(now())
+  subject     Subject? @relation(fields: [subjectID], references: [id])
+  subjectID   String?
+  due         DateTime
+  name        String
+  description String?
+  completed   Boolean  @default(false)
+  user        User?    @relation(fields: [userID], references: [id])
+  userID      String?
+}
+
+model Note {
+  id         String    @id @default(uuid())
+  timestamp  DateTime  @default(now())
+  name       String
+  text       String?
+  isPinboard Boolean   @default(false)
+  pinboard   Pinboard? @relation(fields: [pinboardID], references: [id])
+  pinboardID String    @unique
+  author     User?     @relation(fields: [authorID], references: [id])
+  authorID   String?
+}
+
+model Pinboard {
+  id   String @id @default(uuid())
+  note Note?
+  pins Pin[]
+}
+
+model Pin {
+  id         String    @id @default(uuid())
+  name       String?
+  text       String?
+  images     Url[]
+  pinboard   Pinboard? @relation(fields: [pinboardID], references: [id])
+  pinboardID String?
+}
+
+model Url {
+  id    String  @id @default(uuid())
+  url   String
+  pin   Pin?    @relation(fields: [pinID], references: [id])
+  pinID String?
 }
