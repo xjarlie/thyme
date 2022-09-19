@@ -6,7 +6,7 @@ import Timetable from './Components/Pages/Timetable/Timetable.js';
 import Tasks from './Components/Pages/Tasks/Tasks.js';
 import Signup from './Components/Pages/Auth/Signup.js';
 import './index.css';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate, useNavigate } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
@@ -36,7 +36,18 @@ const router = createBrowserRouter([
   },
   {
     path: '/signup',
-    element: <Signup />
+    element: <Signup />,
+    loader: async () => {
+      const response = await fetch('http://localhost:4000/auth/checktoken', {
+        method: 'GET',
+        credentials: 'include'
+      });
+
+      if ((await response.json()).result === true) {
+        throw new Error('wasd');
+      }
+    },
+    errorElement: <Navigate to={"/dashboard"} />
   }
 ]);
 

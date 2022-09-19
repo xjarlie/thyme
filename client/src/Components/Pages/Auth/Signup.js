@@ -1,4 +1,5 @@
 import React from 'react';
+import withLoaderData from '../../../lib/withLoaderData.js';
 
 class Signup extends React.Component {
 
@@ -17,6 +18,7 @@ class Signup extends React.Component {
 
     componentDidMount() {
         console.log('cookies:', document.cookie);
+        console.log('LOADERDATA', this.props.loaderData);
     }
 
     handleChange(e) {
@@ -57,4 +59,4 @@ class Signup extends React.Component {
     }
 }
 
-export default Signup;
+export default withLoaderData(Signup);
