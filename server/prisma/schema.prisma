@@ -13,18 +13,29 @@ model User {
   email      String      @unique
   password   String
   salt       String
+  authToken  AuthToken   @relation(fields: [tokenID], references: [id])
+  tokenID    String      @unique
   name       String?
   timetables Timetable[]
   tasks      Task[]
   notes      Note[]
+  subjects   Subject[]
+}
+
+model AuthToken {
+  id      String @id @default(uuid())
+  token   String @unique
+  expires BigInt
+  user    User?
 }
 
 model Timetable {
-  id        String    @id @default(uuid())
-  timestamp DateTime  @default(now())
+  id        String            @id @default(uuid())
+  timestamp DateTime          @default(now())
   subjects  Subject[]
-  owner     User      @relation(fields: [ownerID], references: [id])
-  ownerID   String
+  instances SubjectInstance[]
+  user      User              @relation(fields: [userID], references: [id])
+  userID    String
 }
 
 model Subject {
@@ -36,17 +47,22 @@ model Subject {
   timetableID String
   instances   SubjectInstance[]
   tasks       Task[]
+  user        User              @relation(fields: [userID], references: [id])
+  userID      String
 }
 
 model SubjectInstance {
-  id        String   @id @default(uuid())
-  timestamp DateTime @default(now())
-  subject   Subject  @relation(fields: [subjectID], references: [id])
-  subjectID String
-  day       String
-  time      String
-  room      String?
-  teacher   String?
+  id          String     @id @default(uuid())
+  timestamp   DateTime   @default(now())
+  subject     Subject    @relation(fields: [subjectID], references: [id])
+  subjectID   String
+  day         String
+  time        String
+  room        String?
+  teacher     String?
+  userID      String
+  timetable   Timetable? @relation(fields: [timetableID], references: [id])
+  timetableID String?
 }
 
 model Task {
@@ -58,8 +74,8 @@ model Task {
   name        String
   description String?
   completed   Boolean  @default(false)
-  user        User?    @relation(fields: [userID], references: [id])
-  userID      String?
+  user        User     @relation(fields: [userID], references: [id])
+  userID      String
 }
 
 model Note {
@@ -69,9 +85,9 @@ model Note {
   text       String?
   isPinboard Boolean   @default(false)
   pinboard   Pinboard? @relation(fields: [pinboardID], references: [id])
-  pinboardID String    @unique
-  author     User?     @relation(fields: [authorID], references: [id])
-  authorID   String?
+  pinboardID String?   @unique
+  user       User      @relation(fields: [userID], references: [id])
+  userID     String
 }
 
 model Pinboard {

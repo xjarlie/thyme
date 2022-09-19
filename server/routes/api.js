@@ -19,8 +19,6 @@ const prisma = require('../lib/prisma');
 //         res.status(400).send(e);
 //         await prisma.$disconnect();
 //     });
-
-
 // });
 
 router.get('/dashboard', (req, res) => {
