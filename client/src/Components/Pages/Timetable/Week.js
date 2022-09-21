@@ -2,6 +2,7 @@ import React from "react";
 import Day from "./Day";
 
 class Week extends React.Component {
+
     render() {
 
         const data = [
@@ -28,12 +29,12 @@ class Week extends React.Component {
             }
         ];
 
-        console.log(data);
+        const hourlyHeight = 65;
 
         return (
             <div className="week">
                 {data.map((o) => 
-                    <Day key={o.dayName} dayName={o.dayName} />
+                    <Day key={o.dayName} dayName={o.dayName} number={data.indexOf(o)} height={hourlyHeight * 24} />
                 )}
             </div>
         )

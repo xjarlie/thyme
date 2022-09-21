@@ -5,7 +5,7 @@ import Sideitem from "./Sideitem";
 class Sidebar extends React.Component {
     render() {
         return (
-            <div className="sidebar">
+            <div className="sidebar collapsed">
                 <Sideitem name="Dashboard" icon={Icon.Activity} />
                 <Sideitem name="Timetable" icon={Icon.Calendar} />
                 <Sideitem name="Tasks" icon={Icon.CheckSquare} />

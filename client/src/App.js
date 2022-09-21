@@ -11,7 +11,9 @@ class App extends React.Component {
         <Navbar />
         <div className='main'>
           <Sidebar />
-          <Outlet />
+          <div className='content'>
+            <Outlet />
+          </div>
         </div>
       </div>
     );

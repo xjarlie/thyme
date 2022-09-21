@@ -5,7 +5,7 @@ class Timetable extends React.Component {
 
     render() {
         return (
-            <div className="content">
+            <div className="timetable">
                 <Week />
             </div>
         )
