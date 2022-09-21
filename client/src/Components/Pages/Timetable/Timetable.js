@@ -1,10 +1,13 @@
 import React from "react";
+import Week from "./Week";
 
 class Timetable extends React.Component {
 
     render() {
         return (
-            <h1>hello world timetable</h1>
+            <div className="content">
+                <Week />
+            </div>
         )
     }
 
