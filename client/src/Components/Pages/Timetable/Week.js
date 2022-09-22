@@ -1,5 +1,4 @@
 import React from "react";
-import Day from "./Day";
 import DayHeader from "./DayHeader.js";
 import DayContent from "./DayContent.js";
 
@@ -50,46 +49,47 @@ class Week extends React.Component {
             }
         };
 
-        const events = {
-            wasd: {
+        const events = [
+            {
                 name: "maths",
                 startTime: "0820",
                 endTime: "0920",
                 room: "504"
             },
-            dswahyfura: {
+            {
                 name: "english",
                 startTime: "0920",
                 endTime: "1020",
                 room: "406"
             },
-            fhbndsuyi: {
+            {
                 name: "physics",
                 startTime: "1040",
                 endTime: "1140",
                 room: "416"
             },
-            grfenuiasr: {
+            {
                 name: "tok",
                 startTime: "1140",
                 endTime: "1240",
                 room: "god knows"
             },
-            ferhjwua8io: {
+            {
                 name: "maths",
                 startTime: "1330",
                 endTime: "1430",
                 room: "504"
             },
-            fresgse: {
+            {
                 name: "english",
                 startTime: "1430",
                 endTime: "1530",
                 room: "401"
             }
-        };
+        ];
 
-        const hourlyHeight = 65;
+        const hourlyHeight = 85;
+        const offsetHours = (Number(events[0].startTime) - 60).toString().padStart(4, '0');
 
         return (
             <div className="week" >
@@ -103,7 +103,7 @@ class Week extends React.Component {
                 <div className="day-content">
                     {
                         data.map((o) =>
-                            <DayContent key={`${o.dayName}-content`} dayName={o.dayName} events={events} subjects={subjects} number={data.indexOf(o)} height={hourlyHeight * 24} />
+                            <DayContent key={`${o.dayName}-content`} dayName={o.dayName} events={events} subjects={subjects} number={data.indexOf(o)} height={hourlyHeight * 24} offset={offsetHours} />
                         )
                     }
                 </div>
