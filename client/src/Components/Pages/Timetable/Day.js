@@ -1,6 +1,5 @@
 import React from "react";
 import Event from "./Event";
-import * as Icon from 'react-feather';
 
 class Day extends React.Component {
 
