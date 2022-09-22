@@ -4,7 +4,6 @@ class DayHeader extends React.Component {
 
     onNextButtonClick() {
         const currentDay = document.querySelector('.day-headers .header.active');
-        console.log(currentDay.dataset)
         
         const nextDay = document.querySelector(`.day-headers .header[data-daynumber='${Number(currentDay.dataset.daynumber) + 1}']`);
         if (nextDay) {
@@ -31,7 +30,7 @@ class DayHeader extends React.Component {
 
     render() {
         return (
-            <div className={`header ${this.props.dayNumber===0 ? 'active': ''}`} data-daynumber={this.props.dayNumber}>
+            <div className={`header ${this.props.dayNumber===this.props.currentDay ? 'active': ''}`} data-daynumber={this.props.dayNumber}>
                 <button className="icon arrow-left" onClick={this.onPrevButtonClick}></button>
                 <span>{this.props.dayName}</span>
                 <button className="icon arrow-right" onClick={this.onNextButtonClick}></button>

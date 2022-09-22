@@ -35,9 +35,10 @@ class Event extends React.Component {
         //     color = 'aquamarine';
         // }
 
+
         return (
-            <div className="event-container" style={{top: startPos - offsetHours, height: height + 'px' }}>
-                <div className="event" style={{ backgroundColor: this.props.data.color}}>
+            <div className={"event-container"} style={{top: startPos - offsetHours, height: height + 'px' }}>
+                <div className={`event ${this.props.connectTop ? 'connect-top' : ''} ${this.props.connectBottom ? 'connect-bottom' : ''}`} style={{ backgroundColor: this.props.data.color}}>
                     <span className="title">{this.props.data.displayName}</span>
                     <div className="under">
                         <span className="room">{this.props.data.room}</span>

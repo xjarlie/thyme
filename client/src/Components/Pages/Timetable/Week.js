@@ -90,20 +90,22 @@ class Week extends React.Component {
 
         const hourlyHeight = 85;
         const offsetHours = (Number(events[0].startTime) - 60).toString().padStart(4, '0');
+        let currentDay = (new Date(Date.now())).getDay() - 1;
+        if (currentDay === -1) currentDay = 6;
 
         return (
             <div className="week" >
                 <div className="day-headers">
                     {
                         data.map((o) =>
-                            <DayHeader key={`${o.dayName}-header`} dayName={o.dayName} dayNumber={data.indexOf(o)} number={data.indexOf(o)} />
+                            <DayHeader key={`${o.dayName}-header`} currentDay={currentDay} dayName={o.dayName} dayNumber={data.indexOf(o)} number={data.indexOf(o)} />
                         )
                     }
                 </div>
                 <div className="day-content">
                     {
                         data.map((o) =>
-                            <DayContent key={`${o.dayName}-content`} dayName={o.dayName} events={events} subjects={subjects} number={data.indexOf(o)} height={hourlyHeight * 24} offset={offsetHours} />
+                            <DayContent key={`${o.dayName}-content`} currentDay={currentDay} dayName={o.dayName} events={events} subjects={subjects} number={data.indexOf(o)} height={hourlyHeight * 24} offset={offsetHours} />
                         )
                     }
                 </div>
@@ -112,7 +114,7 @@ class Week extends React.Component {
                         <Day key={o.dayName} dayName={o.dayName} number={data.indexOf(o)} height={hourlyHeight * 24} />
                     )
                 } */}
-            </div >
+            </div>
         )
     }
 }
