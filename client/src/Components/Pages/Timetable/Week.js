@@ -4,7 +4,8 @@ import DayContent from "./DayContent.js";
 
 class Week extends React.Component {
 
-    render() {
+    constructor() {
+        super();
 
         const data = [
             {
@@ -46,74 +47,120 @@ class Week extends React.Component {
             english: {
                 name: 'English',
                 color: '#C3A94D'
+            },
+            spanish: {
+                name: 'Spanish',
+                color: '#AC3AA0'
             }
         };
 
         const events = [
             {
+                name: 'spanish',
+                startTime: "0230",
+                endTime: "0400",
+                room: '123',
+                day: 2
+            },
+            {
                 name: "maths",
                 startTime: "0820",
                 endTime: "0920",
-                room: "504"
+                room: "504",
+                day: 1
             },
             {
                 name: "english",
                 startTime: "0920",
                 endTime: "1020",
-                room: "406"
+                room: "406",
+                day: 1
             },
             {
                 name: "physics",
                 startTime: "1040",
                 endTime: "1140",
-                room: "416"
+                room: "416",
+                day: 0
             },
             {
                 name: "tok",
                 startTime: "1140",
                 endTime: "1240",
-                room: "god knows"
+                room: "god knows",
+                day: 2
             },
             {
                 name: "maths",
                 startTime: "1330",
                 endTime: "1430",
-                room: "504"
+                room: "504",
+                day: 2
             },
             {
                 name: "english",
                 startTime: "1430",
                 endTime: "1530",
-                room: "401"
+                room: "401",
+                day: 6
             }
         ];
+
+        let highestDay = 0;
+        for (const i in events) {
+            if (events[i].day > highestDay) highestDay = events[i].day;
+        }
+
+        this.state = {
+            data,
+            subjects,
+            events,
+            numDays: highestDay
+        }
+        
+    }
+
+    componentDidMount() {
+        document.querySelector('.timetable').style['min-width'] = `${170*(this.state.numDays+1)}px`
+    }
+
+    render() {
+
+        const {events, subjects, data, numDays: highestDay} = this.state;
 
         const hourlyHeight = 85;
         const offsetHours = (Number(events[0].startTime) - 60).toString().padStart(4, '0');
         let currentDay = (new Date(Date.now())).getDay() - 1;
         if (currentDay === -1) currentDay = 6;
 
+        
+
+
         return (
             <div className="week" >
                 <div className="day-headers">
                     {
-                        data.map((o) =>
-                            <DayHeader key={`${o.dayName}-header`} currentDay={currentDay} dayName={o.dayName} dayNumber={data.indexOf(o)} number={data.indexOf(o)} />
-                        )
+
+                        Object.entries(data).map(([key, value]) => {
+                            if (key <= highestDay) {
+                                return <DayHeader key={`${value.dayName}-header`} currentDay={currentDay} dayName={value.dayName} dayNumber={key} number={key} />
+                            }
+
+                        })
                     }
                 </div>
                 <div className="day-content">
                     {
-                        data.map((o) =>
-                            <DayContent key={`${o.dayName}-content`} currentDay={currentDay} dayName={o.dayName} events={events} subjects={subjects} number={data.indexOf(o)} height={hourlyHeight * 24} offset={offsetHours} />
-                        )
+                        Object.entries(data).map(([key, value]) => {
+                            const dayEvents = events.filter(o => o.day === Number(key));
+                            
+                            if (key <= highestDay) {
+                                return <DayContent key={`${value.dayName}-content`} currentDay={currentDay} dayName={value.dayName} events={dayEvents} subjects={subjects} number={key} height={hourlyHeight * 24} offset={offsetHours} />
+                            }
+
+                        })
                     }
                 </div>
-                {/* {
-                    data.map((o) =>
-                        <Day key={o.dayName} dayName={o.dayName} number={data.indexOf(o)} height={hourlyHeight * 24} />
-                    )
-                } */}
             </div>
         )
     }

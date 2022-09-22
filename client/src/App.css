@@ -197,7 +197,6 @@ h1 {
 
 .timetable {
     width: 100%;
-    min-width: 900px
 }
 
 .week {
@@ -314,7 +313,7 @@ h1 {
 
 @media screen and (max-width: 425px) {
     .timetable {
-        min-width: 0;
+        min-width: 0 !important;
         width: 100%;
     }
 
