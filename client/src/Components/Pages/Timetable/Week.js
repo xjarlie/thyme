@@ -102,7 +102,7 @@ class Week extends React.Component {
                 startTime: "1430",
                 endTime: "1530",
                 room: "401",
-                day: 6
+                day: 4
             }
         ];
 
@@ -111,11 +111,18 @@ class Week extends React.Component {
             if (events[i].day > highestDay) highestDay = events[i].day;
         }
 
+        let currentDay = (new Date(Date.now())).getDay() - 1;
+        if (currentDay === -1) currentDay = 6;
+
+        let activeDay = currentDay;
+        if (activeDay > highestDay) activeDay = 0;
+
         this.state = {
             data,
             subjects,
             events,
-            numDays: highestDay
+            numDays: highestDay,
+            activeDay
         }
         
     }
@@ -130,8 +137,7 @@ class Week extends React.Component {
 
         const hourlyHeight = 85;
         const offsetHours = (Number(events[0].startTime) - 60).toString().padStart(4, '0');
-        let currentDay = (new Date(Date.now())).getDay() - 1;
-        if (currentDay === -1) currentDay = 6;
+        
 
         
 
@@ -143,7 +149,9 @@ class Week extends React.Component {
 
                         Object.entries(data).map(([key, value]) => {
                             if (key <= highestDay) {
-                                return <DayHeader key={`${value.dayName}-header`} currentDay={currentDay} dayName={value.dayName} dayNumber={key} number={key} />
+                                return <DayHeader key={`${value.dayName}-header`} currentDay={this.state.activeDay} dayName={value.dayName} dayNumber={key} number={key} />
+                            } else {
+                                return false;
                             }
 
                         })
@@ -155,7 +163,9 @@ class Week extends React.Component {
                             const dayEvents = events.filter(o => o.day === Number(key));
                             
                             if (key <= highestDay) {
-                                return <DayContent key={`${value.dayName}-content`} currentDay={currentDay} dayName={value.dayName} events={dayEvents} subjects={subjects} number={key} height={hourlyHeight * 24} offset={offsetHours} />
+                                return <DayContent key={`${value.dayName}-content`} currentDay={this.state.activeDay} dayName={value.dayName} events={dayEvents} subjects={subjects} number={key} height={hourlyHeight * 24} offset={offsetHours} />
+                            } else {
+                                return false;
                             }
 
                         })
