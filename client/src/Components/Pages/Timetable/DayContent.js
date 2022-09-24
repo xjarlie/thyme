@@ -1,10 +1,11 @@
 import React from "react";
 import Event from "./Event";
+import styles from "../../../css/Timetable.module.css"
 
 class DayContent extends React.Component {
     render() {
         return (
-            <div className={`subjects ${Number(this.props.number) === this.props.currentDay ? 'active' : ''}`} data-daynumber={this.props.number}>
+            <div className={`${styles.subjects} ${Number(this.props.number) === this.props.currentDay ? styles.active : ''}`} data-daynumber={this.props.number}>
                 {Object.entries(this.props.events).map(([key, value]) => {
 
                     const events = this.props.events;

@@ -12,23 +12,23 @@
     overflow-y: hidden;
 }
 
-.day-headers {
+.dayHeaders {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
 @media screen and (min-width: 426px) {
-    .day-headers .header:not([data-daynumber="0"]) {
+    .dayHeaders .header:not([data-daynumber="0"]) {
         border-left: 1px solid var(--color-light-0);
     }
 
-    .day-content .subjects:not([data-daynumber="0"]) {
+    .dayContent .subjects:not([data-daynumber="0"]) {
         border-left: 1px solid var(--color-light-0);
     }
 }
 
-.day-headers .header {
+.dayHeaders .header {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -39,23 +39,23 @@
     border-bottom: 2px solid var(--color-light-0);
 }
 
-.day-headers .header>span {
+.dayHeaders .header>span {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 2rem;
     font-variation-settings: "wght" 275;
     color: white;
 }
 
-.day-headers .header>.icon {
+.dayHeaders .header>button {
     display: none;
 }
 
-.day-content .subjects {
+.dayContent .subjects {
     height: 200%;
     width: 100%;
 }
 
-.day-content {
+.dayContent {
     flex-grow: 1;
     overflow-y: auto;
     display: flex;
@@ -63,15 +63,15 @@
     scrollbar-width: none;
 }
 
-.day-content::-webkit-scrollbar {
+.dayContent::-webkit-scrollbar {
     display: none;
 }
 
-.day-content .subjects {
+.dayContent .subjects {
     position: relative;
 }
 
-.event-container {
+.eventContainer {
     position: absolute;
     width: 100%;
     padding: 0 6px;
@@ -87,11 +87,11 @@
     color: white;
 }
 
-.event.connect-top {
+.event.connectTop {
     border-radius: 0 0 6px 6px;
 }
 
-.event.connect-bottom {
+.event.connectBottom {
     border-radius: 6px 6px 0 0;
 }
 
@@ -112,34 +112,32 @@
     padding: 0 12px;
 }
 
-
-
 @media screen and (max-width: 425px) {
     .timetable {
         min-width: 0 !important;
         width: 100%;
     }
 
-    .day-headers .header {
+    .dayHeaders .header {
         justify-content: space-around;
         --iconsize: 16px;
     }
 
-    .day-headers .header>.icon {
+    .dayHeaders .header>button {
         display: block;
         color: var(--color-light-0);
     }
 
-    .day-headers .header>.icon.arrow-left {
+    .dayHeaders .header>.icon.arrow-left {
         float: left;
     }
 
-    .day-headers .header:not(.active) {
+    .dayHeaders .header:not(.active) {
         display: none;
         visibility: hidden;
     }
 
-    .day-content .subjects:not(.active) {
+    .dayContent .subjects:not(.active) {
         display: none;
         visibility: hidden;
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import DayHeader from "./DayHeader.js";
 import DayContent from "./DayContent.js";
+import styles from "../../../css/Timetable.module.css"
 
 class Week extends React.Component {
 
@@ -128,7 +129,7 @@ class Week extends React.Component {
     }
 
     componentDidMount() {
-        document.querySelector('.timetable').style['min-width'] = `${170*(this.state.numDays+1)}px`
+        document.querySelector(`.${styles.timetable}`).style['min-width'] = `${170*(this.state.numDays+1)}px`
     }
 
     render() {
@@ -143,8 +144,8 @@ class Week extends React.Component {
 
 
         return (
-            <div className="week" >
-                <div className="day-headers">
+            <div className={styles.week} >
+                <div className={styles.dayHeaders}>
                     {
 
                         Object.entries(data).map(([key, value]) => {
@@ -157,7 +158,7 @@ class Week extends React.Component {
                         })
                     }
                 </div>
-                <div className="day-content">
+                <div className={styles.dayContent}>
                     {
                         Object.entries(data).map(([key, value]) => {
                             const dayEvents = events.filter(o => o.day === Number(key));

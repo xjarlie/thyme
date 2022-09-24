@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../../../css/Timetable.module.css";
 
 class DayHeader extends React.Component {
 
@@ -30,8 +31,8 @@ class DayHeader extends React.Component {
 
     render() {
         return (
-            <div className={`header ${Number(this.props.dayNumber)===this.props.currentDay ? 'active': ''}`} data-daynumber={this.props.dayNumber}>
-                <button className="icon arrow-left" onClick={this.onPrevButtonClick}></button>
+            <div className={`${styles.header} ${Number(this.props.dayNumber)===this.props.currentDay ? styles.active : ''}`} data-daynumber={this.props.dayNumber}>
+                <button className={`icon arrow-left`} onClick={this.onPrevButtonClick}></button>
                 <span>{this.props.dayName}</span>
                 <button className="icon arrow-right" onClick={this.onNextButtonClick}></button>
             </div>

@@ -1,12 +1,12 @@
 import React from "react";
 import Week from "./Week";
-import "../../../css/Timetable.css"
+import styles from "../../../css/Timetable.module.css"
 
 class Timetable extends React.Component {
 
     render() {
         return (
-            <div className="timetable">
+            <div className={styles.timetable}>
                 <Week />
             </div>
         )

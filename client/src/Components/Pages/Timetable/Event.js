@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../../../css/Timetable.module.css";
 
 class Event extends React.Component {
 
@@ -35,14 +36,13 @@ class Event extends React.Component {
         //     color = 'aquamarine';
         // }
 
-
         return (
-            <div className={"event-container"} style={{top: startPos - offsetHours, height: height + 'px' }}>
-                <div className={`event ${this.props.connectTop ? 'connect-top' : ''} ${this.props.connectBottom ? 'connect-bottom' : ''}`} style={{ backgroundColor: this.props.data.color}}>
-                    <span className="title">{this.props.data.displayName}</span>
-                    <div className="under">
-                        <span className="room">{this.props.data.room}</span>
-                        <span className="times">{this.props.data.startTime} - {this.props.data.endTime}</span>
+            <div className={styles.eventContainer} style={{top: startPos - offsetHours, height: height + 'px' }}>
+                <div className={`${styles.event} ${this.props.connectTop ? styles.connectTop : ''} ${this.props.connectBottom ? styles.connectBottom : ''}`} style={{ backgroundColor: this.props.data.color}}>
+                    <span className={styles.title}>{this.props.data.displayName}</span>
+                    <div className={styles.under}>
+                        <span className={styles.room}>{this.props.data.room}</span>
+                        <span className={styles.times}>{this.props.data.startTime} - {this.props.data.endTime}</span>
                     </div>
                 </div>
 
