@@ -12,7 +12,7 @@ router.post('/signup', async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-        res.status(400).json({error: {message: 'Need all fields'}})
+        res.status(400).json({ error: { message: 'Need all fields' } })
         return false;
     }
 
@@ -25,25 +25,28 @@ router.post('/signup', async (req, res) => {
         console.log('DATA HEREEE', data);
 
         const pushData = async () => {
-            return await prisma.user.create({data: {...data, authToken: {
-                create: authToken
-            }}});
+            return await prisma.user.create({
+                data: {
+                    ...data, authToken: {
+                        create: authToken
+                    }
+                }
+            });
         }
 
         const pushedData = await pushData();
 
         console.log(pushedData);
         console.log('AUTH_TOKEN', authToken.token, cookieOptions)
-        res.status(200).cookie('AUTH_TOKEN', authToken.token, cookieOptions).json({result: {name: pushedData.name, email: pushedData.email}});
+        res.status(200).cookie('AUTH_TOKEN', authToken.token, cookieOptions).json({ result: { name: pushedData.name, email: pushedData.email } });
         await prisma.$disconnect();
         return true;
     } catch (e) {
         console.log(e);
-        res.status(400).json({error: e});
+        res.status(400).json({ error: e });
         await prisma.$disconnect();
         return false;
     }
-    
 });
 
 router.get('/login', async (req, res) => {
@@ -59,9 +62,9 @@ router.get('/checktoken', async (req, res) => {
     console.log(token);
     console.log(await getUserIDFromToken(token));
     if (token && await getUserIDFromToken(token)) {
-        res.status(200).cookie('AUTH_TOKEN', token, cookieOptions).json({result: true})
+        res.status(200).cookie('AUTH_TOKEN', token, cookieOptions).json({ result: true })
     } else {
-        res.status(200).json({result: false})
+        res.status(200).json({ result: false })
     }
 });
 
@@ -102,7 +105,7 @@ function hashData(string, salt) {
     return { hashed, salt: salto };
 }
 
-function generateAuthToken(lasts=2592000000 /* 30 days */) {
+function generateAuthToken(lasts = 2592000000 /* 30 days */) {
     const tokenData = crypto.randomBytes(64).toString('hex');
     const expires = Date.now() + lasts;
     return { token: tokenData, expires };

@@ -1,0 +1,38 @@
+.navbar {
+    background-color: var(--color-dark-0);
+    border-radius: 14px;
+    height: 3rem;
+    min-height: 3rem;
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--color-primary);
+
+}
+
+@media screen and (max-width: 375px) {
+    .navbar {
+        margin: 0 0 20px 0;
+        width: 100%;
+        border-radius: 0;
+
+    }
+}
+
+.menuButton {
+    margin: 0 -10px 0 14px;
+}
+
+.menuButton>.icon {
+    width: 30px;
+    height: auto;
+    stroke-width: 1.9;
+}
+
+.navbar>.header {
+    font-family: 'Josefin Sans Italic', sans-serif;
+    font-weight: 400;
+    font-size: 1.8rem;
+    margin: 0 20px;
+}

@@ -1,0 +1,119 @@
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('../fonts/JosefinSans.ttf');
+}
+
+@font-face {
+    font-family: 'Josefin Sans Italic';
+    src: url('../fonts/JosefinSans-italic.ttf');
+}
+
+:root {
+    --color-primary: #BDC667;
+    --color-bg-dark: #040A05;
+    --color-red: #FF6F6F;
+    --color-dark-0: #242424;
+    --color-dark-1: #383838;
+    --color-dark-2: #4f4f4f;
+    --color-light-0: #939393;
+    --color-light-1: #D6D6D6;
+    --iconsize: 24px;
+}
+
+*,
+::before,
+::after,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+
+.arrow-left {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: var(--iconsize) calc(var(--iconsize) - 5px) var(--iconsize) 0;
+    border-color: transparent currentColor transparent transparent;
+    padding: 0;
+}
+
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: var(--iconsize) 0 var(--iconsize) calc(var(--iconsize) - 5px);
+    border-color: transparent transparent transparent currentColor;
+    padding: 0;
+}
+
+.app {
+    background-color: var(--color-bg-dark);
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow: auto;
+    font-family: 'Josefin Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.formInput {
+    padding: 0.65rem 0;
+}
+
+.formInput input {
+    width: 100%;
+    font-family: 'Josefin Sans', sans-serif;
+    padding: 0.75rem;
+    background-color: var(--color-dark-1);
+    border: none;
+    border-radius: 6px;
+    
+    transition: background-color 0.3s;
+    color: white;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+}
+
+.form-input input:hover {
+    background-color: #2e2e2e;
+}
+
+.form-input input:focus {
+    outline: none;
+    border-bottom: 4px inset var(--color-primary);
+    background-color: #1e1e1e;
+}
+
+button {
+    background: none;
+    border: none;
+    color: currentColor;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+button.primary {
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    color: black;
+    font-size: 1.5rem;
+    border-radius: 6px;
+    padding: 0.5rem;
+    transition: background-color 0.3s;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+}
+
+button.primary:active {
+    background-color: var(--color-dark-0);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}

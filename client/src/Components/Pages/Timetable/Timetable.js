@@ -1,5 +1,6 @@
 import React from "react";
 import Week from "./Week";
+import "../../../css/Timetable.css"
 
 class Timetable extends React.Component {
 
