@@ -1,6 +1,7 @@
 import React from 'react';
 import withLoaderData from '../../../lib/withLoaderData.js';
 import styles from "../../../css/Auth.module.css";
+import * as Icon from 'react-feather';
 
 class Signup extends React.Component {
 
@@ -10,7 +11,8 @@ class Signup extends React.Component {
         this.state = {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            password2: ''
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -43,6 +45,15 @@ class Signup extends React.Component {
         console.log(status, json);
     }
 
+    togglePassword(e) {
+        const passwordInput = e.target.parentElement.querySelector('input[type="password"]');
+        if (passwordInput) {
+            passwordInput.type = 'text';
+        } else {
+            e.target.parentElement.querySelector('input[type="text"]').type = 'password';
+        }
+    }
+
     render() {
         return (
             <div className={styles.form}>
@@ -56,6 +67,9 @@ class Signup extends React.Component {
                 </div>
                 <div className={styles.formInput}>
                     <input type={"password"} onChange={this.handleChange} id={"passwordInput"} value={this.state.password} name={"password"} placeholder={"Password"} />
+                    <button type='button' onClick={this.togglePassword} id={'showPassword'} className={styles.showPassword}>
+                        <Icon.Eye />
+                    </button>
                 </div>
                 <div className={styles.formInput}>
                     <input type={"password"} onChange={this.handleChange} id={"password2Input"} value={this.state.password2} name={"password2"} placeholder={"Repeat password"} />
