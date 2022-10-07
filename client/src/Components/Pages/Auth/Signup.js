@@ -46,11 +46,11 @@ class Signup extends React.Component {
     }
 
     togglePassword(e) {
-        const passwordInput = e.target.parentElement.querySelector('input[type="password"]');
-        if (passwordInput) {
+        const passwordInput = e.target.parentElement.querySelector('.passwordInput');
+        if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
         } else {
-            e.target.parentElement.querySelector('input[type="text"]').type = 'password';
+            passwordInput.type = 'password';
         }
     }
 
@@ -66,13 +66,16 @@ class Signup extends React.Component {
                     <input type={"email"} onChange={this.handleChange} id={"emailInput"} value={this.state.email} name={"email"} placeholder={"Email"} />
                 </div>
                 <div className={styles.formInput}>
-                    <input type={"password"} onChange={this.handleChange} id={"passwordInput"} value={this.state.password} name={"password"} placeholder={"Password"} />
+                    <input type={"password"} onChange={this.handleChange} id={"passwordInput"} value={this.state.password} name={"password"} placeholder={"Password"} className="passwordInput" />
                     <button type='button' onClick={this.togglePassword} id={'showPassword'} className={styles.showPassword}>
-                        <Icon.Eye />
+                        <Icon.Eye className={styles.icon} />
                     </button>
                 </div>
                 <div className={styles.formInput}>
-                    <input type={"password"} onChange={this.handleChange} id={"password2Input"} value={this.state.password2} name={"password2"} placeholder={"Repeat password"} />
+                    <input type={"password"} className="passwordInput" onChange={this.handleChange} id={"password2Input"} value={this.state.password2} name={"password2"} placeholder={"Repeat password"} />
+                    <button type='button' onClick={this.togglePassword} id={'showPassword'} className={styles.showPassword}>
+                        <Icon.Eye className={styles.icon} />
+                    </button>
                 </div>
 
                 <button type={"button"} onClick={this.onSubmit} className={"primary"} >Continue</button>
