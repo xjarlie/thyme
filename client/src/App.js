@@ -22,4 +22,16 @@ class App extends React.Component {
   }
 }
 
+async function loader() {
+  const response = await fetch('http://localhost:4000/auth/checktoken', {
+    method: 'GET',
+    credentials: 'include'
+  });
+
+  if ((await response.json()).result === false) {
+    throw new Error('wasd');
+  }
+}
+
 export default App;
+export { loader };

@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App, { loader as AppLoader } from './App';
 import Dashboard from './Components/Pages/Dashboard/Dashboard.js';
 import Timetable from './Components/Pages/Timetable/Timetable.js';
 import Tasks from './Components/Pages/Tasks/Tasks.js';
-import Auth, {loader as AuthLoader} from './Components/Pages/Auth/Auth.js';
+import Auth, { loader as AuthLoader } from './Components/Pages/Auth/Auth.js';
 import Signup from './Components/Pages/Auth/Signup.js';
 import Login from './Components/Pages/Auth/Login.js';
 import "./index.css";
@@ -35,7 +35,9 @@ const router = createBrowserRouter([
         path: 'tasks',
         element: <Tasks />
       }
-    ]
+    ],
+    loader: AppLoader,
+    errorElement: <Navigate to={"/auth/login"} />
   },
   {
     path: '/auth',
@@ -53,7 +55,7 @@ const router = createBrowserRouter([
     ],
     errorElement: <Navigate to={"/dashboard"} />
   }
-  
+
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

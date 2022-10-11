@@ -7,8 +7,6 @@ const cookieOptions = { secure: true, httpOnly: true, maxAge: 5184000000 /* 60 d
 
 router.post('/signup', async (req, res) => {
 
-    console.log(req.cookies);
-
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -22,7 +20,6 @@ router.post('/signup', async (req, res) => {
 
     try {
         const data = { name, email, password: hashed, salt };
-        console.log('DATA HEREEE', data);
 
         const pushData = async () => {
             return await prisma.user.create({
@@ -35,66 +32,111 @@ router.post('/signup', async (req, res) => {
         }
 
         const pushedData = await pushData();
-
-        console.log(pushedData);
-        console.log('AUTH_TOKEN', authToken.token, cookieOptions)
-        res.status(200).cookie('AUTH_TOKEN', authToken.token, cookieOptions).json({ result: { name: pushedData.name, email: pushedData.email } });
+        res.status(200).cookie('AUTH_TOKEN', authToken.token, cookieOptions).cookie('AUTH_ID', pushedData.id, cookieOptions).json({ result: { name: pushedData.name, email: pushedData.email } });
         await prisma.$disconnect();
         return true;
     } catch (e) {
-        console.log(e);
         res.status(400).json({ error: e });
         await prisma.$disconnect();
         return false;
     }
 });
 
-router.get('/login', async (req, res) => {
-    const token = 'b35e23230b04902d110baa91fbf5b099fe5971ecb2a723e5d29b556f10db74073aa13e4873d2e64e3f79e37608f048b0c1caf2126425d254978d5415b7590bc5';
-    const result = await getUserIDFromToken(token);
+router.post('/login', async (req, res) => {
+    console.log('requesttt')
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        res.status(400).json({error: {message: 'Need all fields'}});
+    }
+
+    try {
+
+        const user = await prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        });
+
+        const hashedPassword = hashData(password, user.salt);
+
+        if (user.password === hashedPassword.hashed) {
+
+            const newToken = generateAuthToken();
+
+            const updateUser = await prisma.user.update({
+                where: {
+                    email: email
+                },
+                data: {
+                    authToken: {
+                        create: newToken
+                    }
+                }
+            });
+
+            res.status(200).cookie('AUTH_TOKEN', newToken.token, cookieOptions).cookie('AUTH_ID', user.id, cookieOptions).json({result: {name: user.name, email: user.email}});
+            await prisma.$disconnect();
+            return true;
+        }
+
+    } catch (e) {
+        console.log(e);
+        res.status(400).json({error: e});
+        await prisma.$disconnect();
+        return false;
+    }
 
     res.status(200).json(result)
 });
 
 router.get('/checktoken', async (req, res) => {
-    const { AUTH_TOKEN: token } = req.cookies;
+    const { AUTH_TOKEN: token, AUTH_ID: id } = req.cookies;
 
-    console.log(token);
-    console.log(await getUserIDFromToken(token));
-    if (token && await getUserIDFromToken(token)) {
-        res.status(200).cookie('AUTH_TOKEN', token, cookieOptions).json({ result: true })
+    console.log(id, token);
+
+    if (token && id && await checkToken(token, id, res)) {
+        res.status(200).json({ result: true })
     } else {
         res.status(200).json({ result: false })
     }
 });
 
-async function getUserIDFromToken(token) {
-    if (!token) return false;
-
+async function checkToken(token, id, res) {
+    if (!token || !id) return false;
+    console.log('TOKEN: ', token)
     try {
 
-        const fetchedToken = await prisma.authToken.findUnique({
+        const fullToken = await prisma.authToken.findUnique({
             where: {
                 token: token
             }
         });
 
-        if (!fetchedToken || fetchedToken.expires <= Date.now()) {
-            return false;
-        }
+        if (!fullToken || fullToken.expires <= Date.now()) return false;
 
-        const result = await prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
             where: {
-                tokenID: fetchedToken.id
-            },
-            select: {
-                id: true
+                id: id
             }
         });
 
-        return result.id
+        if (user.tokenID === fullToken.id) {
+
+            console.log('token passed')
+
+            const newToken = generateAuthToken();
+            res.cookie('AUTH_TOKEN', newToken, cookieOptions);
+            res.cookie('AUTH_ID', user.id, cookieOptions);
+
+        } else {
+            res.clearCookie('AUTH_TOKEN');
+            console.log('token failed')
+            return false;
+        }
+
     } catch (e) {
-        console.log(e);
+        console.log('error', e);
         return false;
     }
 }
