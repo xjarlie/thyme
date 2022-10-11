@@ -10,7 +10,8 @@ class Signup extends React.Component {
         this.state = {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            password2: ''
         }
 
         this.handleChange = this.handleChange.bind(this);

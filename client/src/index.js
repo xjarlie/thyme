@@ -6,6 +6,7 @@ import Timetable from './Components/Pages/Timetable/Timetable.js';
 import Tasks from './Components/Pages/Tasks/Tasks.js';
 import Auth, {loader as AuthLoader} from './Components/Pages/Auth/Auth.js';
 import Signup from './Components/Pages/Auth/Signup.js';
+import Login from './Components/Pages/Auth/Login.js';
 import "./index.css";
 import "./css/Root.css";
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: 'signup',
         element: <Signup />
+      },
+      {
+        path: 'login',
+        element: <Login />
       }
     ],
     errorElement: <Navigate to={"/dashboard"} />
