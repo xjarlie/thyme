@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../../../css/Auth.module.css";
+import * as Icon from 'react-feather';
 
 class Login extends React.Component {
 
@@ -7,8 +8,8 @@ class Login extends React.Component {
         super();
 
         this.state = {
-            email: 'wasd',
-            password: 'wasd'
+            email: '',
+            password: ''
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -33,6 +34,12 @@ class Login extends React.Component {
         const status = await response.status;
         const json = await response.json();
         console.log(status, json);
+
+        if (status === 200) {
+            window.location.reload();
+        } else {
+            alert('Login information incorrect');
+        }
     }
 
     handleChange(e) {
@@ -41,12 +48,36 @@ class Login extends React.Component {
         });
     }
 
+    togglePassword(e) {
+        const passwordInput = e.target.parentElement.querySelector('.passwordInput');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    }
+
     render() {
         return (
             <div className={styles.form}>
-                <input type={"email"} id={"email"} value={this.state.email} onChange={this.handleChange} />
-                <input type={"password"} id={"password"} value={this.state.password} onChange={this.handleChange} />
-                <button type="button" onClick={this.onSubmit}>Submit</button>
+
+                <span className={styles.header}>Log In</span>
+
+                <div className={styles.formInput}>
+                    <input type={"email"} id={"email"} value={this.state.email} name="email" onChange={this.handleChange} placeholder={"Email"} />
+                </div>
+
+                <div className={styles.formInput}>
+                    <input type={"password"} id={"password"} className="passwordInput" value={this.state.password} name="password" onChange={this.handleChange} placeholder={"Password"} />
+                    <button type='button' onClick={this.togglePassword} id={'showPassword'} className={styles.showPassword}>
+                        <Icon.Eye className={styles.icon} />
+                    </button>
+                    
+                </div>
+
+                <button type="button" onClick={this.onSubmit} className={"primary"}>Continue</button>
+
+                <span className={styles.belowText} onClick={() => {window.location.href = '/auth/signup'}}>Don't have an account yet? Click <u>here</u></span>
             </div>
         )
     }

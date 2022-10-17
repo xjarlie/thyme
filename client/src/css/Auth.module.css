@@ -80,6 +80,18 @@
     background-color: var(--color-dark-1);
 }
 
+@media screen and (max-width: 374px) {
+    .formInput .showPassword {
+        display: none;
+    }
+}
+
 .icon {
     pointer-events: none;
+}
+
+.belowText {
+    color: var(--color-primary);
+    padding: 1rem;
+    pointer-events: all;
 }

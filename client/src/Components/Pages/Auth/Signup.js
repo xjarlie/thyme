@@ -79,6 +79,8 @@ class Signup extends React.Component {
                 </div>
 
                 <button type={"button"} onClick={this.onSubmit} className={"primary"} >Continue</button>
+
+                <span className={styles.belowText} onClick={() => {window.location.href = '/auth/login'}}>Already have an account? Click <u>here</u></span>
             </div>
         )
     }

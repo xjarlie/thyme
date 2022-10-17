@@ -8,25 +8,18 @@ datasource db {
 }
 
 model User {
-  id         String      @id @default(uuid())
-  timestamp  DateTime    @default(now())
-  email      String      @unique
-  password   String
-  salt       String
-  authToken  AuthToken   @relation(fields: [tokenID], references: [id])
-  tokenID    String      @unique
-  name       String?
-  timetables Timetable[]
-  tasks      Task[]
-  notes      Note[]
-  subjects   Subject[]
-}
-
-model AuthToken {
-  id      String @id @default(uuid())
-  token   String @unique
-  expires BigInt
-  user    User?
+  id           String      @id @default(uuid())
+  timestamp    DateTime    @default(now())
+  email        String      @unique
+  password     String
+  salt         String
+  authToken    String      @unique
+  tokenExpires BigInt
+  name         String?
+  timetables   Timetable[]
+  tasks        Task[]
+  notes        Note[]
+  subjects     Subject[]
 }
 
 model Timetable {
