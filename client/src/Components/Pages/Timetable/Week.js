@@ -139,10 +139,6 @@ class Week extends React.Component {
         const hourlyHeight = 85;
         const offsetHours = (Number(events[0].startTime) - 60).toString().padStart(4, '0');
         
-
-        
-
-
         return (
             <div className={styles.week} >
                 <div className={styles.dayHeaders}>
