@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../lib/prisma');
 const crypto = require('crypto');
+const { checkToken } = require("./checkToken");
 
 const cookieOptions = { secure: true, httpOnly: true, maxAge: 5184000000 /* 60 days */, sameSite: 'none' };
 
@@ -185,28 +186,6 @@ router.get('/checktoken', async (req, res) => {
         res.status(200).json({ result: false });
     }
 });
-
-async function checkToken(token, id) {
-    if (!token || !id) return false;
-    try {
-
-        const user = await prisma.user.findUnique({
-            where: {
-                id: id
-            }
-        });
-
-        if (user.authToken === token) {
-            return true;
-        } else {
-            return false;
-        }
-
-    } catch (e) {
-        console.log('error', e);
-        return false;
-    }
-}
 
 function hashData(string, salt) {
     let salto = salt || crypto.randomBytes(16).toString('hex');

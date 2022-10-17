@@ -10,6 +10,7 @@ const port = process.env.PORT || 4000;
 
 const apiRouter = require('./routes/api');
 const authRouter = require('./routes/auth');
+const timetableRouter = require('./routes/timetable');
 
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -22,6 +23,7 @@ app.use(cookieParser());
 
 app.use('/api', apiRouter);
 app.use('/auth', authRouter);
+app.use('/timetable', timetableRouter);
 
 // Keep this last
 app.get('/*', (req, res) => {
