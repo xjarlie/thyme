@@ -1,7 +1,6 @@
 import React from "react";
 import withLoaderData from "../../../lib/withLoaderData";
 import createModal from "../../../lib/modal";
-import Cookies from 'js-cookie';
 
 class Dashboard extends React.Component {
 
@@ -24,9 +23,9 @@ class Dashboard extends React.Component {
 }
 
 async function loader() {
-    const userID = Cookies.get('AUTH_ID');
-    console.log(Cookies.get());
-    return await fetch(`http://localhost:4000/user/${userID}/details`);
+    return await fetch(`http://localhost:4000/user/details`, {
+        credentials: 'include'
+    });
 }
 
 export default withLoaderData(Dashboard);

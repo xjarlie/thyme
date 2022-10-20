@@ -4,7 +4,7 @@ const prisma = require('../lib/prisma');
 const crypto = require('crypto');
 const { checkToken } = require("../lib/checkToken");
 
-const cookieOptions = { secure: true, httpOnly: false, maxAge: 5184000000 /* 60 days */, sameSite: 'none' };
+const cookieOptions = { secure: true, httpOnly: true, maxAge: 5184000000 /* 60 days */, sameSite: 'none' };
 
 router.post('/signup', async (req, res) => {
 
@@ -34,7 +34,7 @@ router.post('/signup', async (req, res) => {
         await prisma.$disconnect();
         return false;
     }
-})
+});
 
 router.post('/login', async (req, res) => {
 
@@ -83,17 +83,17 @@ router.post('/login', async (req, res) => {
 
 });
 
+
 router.get('/checktoken', async (req, res) => {
     const { AUTH_TOKEN: token, AUTH_ID: id } = req.cookies;
     console.log('checking token');
 
     if (token && id && await checkToken(token, id)) {
-        res.status(200).json({ result: true});
+        res.json({ result: true});
         return true;
     } else {
-        res.status(200).json({ result: false });
+        res.json({ result: false });
         return false;
-
     }
 });
 

@@ -26,9 +26,9 @@ router.get('/:timetableID', async (req, res) => {
             return false;    
         }
 
-        res.status(200).json({result: { message: 'Success', timetable: timetable }});
+        res.json({result: { message: 'Success', timetable: timetable }});
         await prisma.$disconnect();
-        
+        return true;
     } catch (e) {
         console.log(e);
         res.status(400).json({error: e});
