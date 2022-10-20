@@ -66,6 +66,7 @@ router.post('/signup', async (req, res) => {
         await prisma.$disconnect();
         return true;
     } catch (e) {
+        console.log(e);
         res.status(400).json({ error: e });
         await prisma.$disconnect();
         return false;

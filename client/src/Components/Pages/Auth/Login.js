@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../../../css/Auth.module.css";
 import * as Icon from 'react-feather';
+import { Link } from "react-router-dom";
 
 class Login extends React.Component {
 
@@ -77,7 +78,7 @@ class Login extends React.Component {
 
                 <button type="button" onClick={this.onSubmit} className={"primary"}>Continue</button>
 
-                <span className={styles.belowText} onClick={() => {window.location.href = '/auth/signup'}}>Don't have an account yet? Click <u>here</u></span>
+                <Link className={styles.belowText} to={"/auth/signup"}>Don't have an account yet? Click <u>here</u></Link>
             </div>
         )
     }

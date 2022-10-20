@@ -94,4 +94,5 @@
     color: var(--color-primary);
     padding: 1rem;
     pointer-events: all;
+    cursor: pointer;
 }

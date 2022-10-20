@@ -2,6 +2,7 @@ import React from 'react';
 import withLoaderData from '../../../lib/withLoaderData.js';
 import styles from "../../../css/Auth.module.css";
 import * as Icon from 'react-feather';
+import { Link } from 'react-router-dom';
 
 class Signup extends React.Component {
 
@@ -43,6 +44,12 @@ class Signup extends React.Component {
         const status = await response.status;
         const json = await response.json();
         console.log(status, json);
+
+        if (status === 200) {
+            window.location.reload();
+        } else {
+            alert('Signup error');
+        }
     }
 
     togglePassword(e) {
@@ -80,7 +87,7 @@ class Signup extends React.Component {
 
                 <button type={"button"} onClick={this.onSubmit} className={"primary"} >Continue</button>
 
-                <span className={styles.belowText} onClick={() => {window.location.href = '/auth/login'}}>Already have an account? Click <u>here</u></span>
+                <Link className={styles.belowText} to={"/auth/login"}>Don't have an account yet? Click <u>here</u></Link>
             </div>
         )
     }
