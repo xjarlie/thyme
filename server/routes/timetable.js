@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const prisma = require('../lib/prisma');
-const checkToken = require('./checkToken');
+const checkToken = require('../lib/checkToken');
 
 router.get('/:timetableID', async (req, res) => {
 
     const {AUTH_TOKEN: token, AUTH_ID: id} = req.cookies;
     const {timetableID} = req.params;
 
-    if (!token || !id || !await checkToken(token, id)) {
+    if (!token || !id || !(await checkToken(token, id))) {
         res.status(401).json({error: {message: 'Incorrect credentials'}});
         return false;
     }
@@ -27,7 +27,8 @@ router.get('/:timetableID', async (req, res) => {
         }
 
         res.status(200).json({result: { message: 'Success', timetable: timetable }});
-
+        await prisma.$disconnect();
+        
     } catch (e) {
         console.log(e);
         res.status(400).json({error: e});

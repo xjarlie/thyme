@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App, { loader as AppLoader } from './App';
-import Dashboard from './Components/Pages/Dashboard/Dashboard.js';
+import Dashboard, { loader as DashLoader } from './Components/Pages/Dashboard/Dashboard.js';
 import Timetable from './Components/Pages/Timetable/Timetable.js';
 import Tasks from './Components/Pages/Tasks/Tasks.js';
 import Auth, { loader as AuthLoader } from './Components/Pages/Auth/Auth.js';
@@ -23,9 +23,7 @@ const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: <Dashboard />,
-        loader: async () => {
-          return fetch('http://localhost:4000/api/dashboard');
-        }
+        loader: DashLoader
       },
       {
         path: 'timetable',

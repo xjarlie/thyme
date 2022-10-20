@@ -2,46 +2,9 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../lib/prisma');
 const crypto = require('crypto');
-const { checkToken } = require("./checkToken");
+const { checkToken } = require("../lib/checkToken");
 
-const cookieOptions = { secure: true, httpOnly: true, maxAge: 5184000000 /* 60 days */, sameSite: 'none' };
-
-// router.post('/signup', async (req, res) => {
-
-//     const { name, email, password } = req.body;
-
-//     if (!name || !email || !password) {
-//         res.status(400).json({ error: { message: 'Need all fields' } })
-//         return false;
-//     }
-
-//     const authToken = generateAuthToken();
-
-//     const { hashed, salt } = hashData(password);
-
-//     try {
-//         const data = { name, email, password: hashed, salt };
-
-//         const pushData = async () => {
-//             return await prisma.user.create({
-//                 data: {
-//                     ...data, authToken: {
-//                         create: authToken
-//                     }
-//                 }
-//             });
-//         }
-
-//         const pushedData = await pushData();
-//         res.status(200).cookie('AUTH_TOKEN', authToken.token, cookieOptions).cookie('AUTH_ID', pushedData.id, cookieOptions).json({ result: { name: pushedData.name, email: pushedData.email } });
-//         await prisma.$disconnect();
-//         return true;
-//     } catch (e) {
-//         res.status(400).json({ error: e });
-//         await prisma.$disconnect();
-//         return false;
-//     }
-// });
+const cookieOptions = { secure: true, httpOnly: false, maxAge: 5184000000 /* 60 days */, sameSite: 'none' };
 
 router.post('/signup', async (req, res) => {
 
@@ -73,58 +36,13 @@ router.post('/signup', async (req, res) => {
     }
 })
 
-// router.post('/login', async (req, res) => {
-//     console.log('requesttt')
-//     const { email, password } = req.body;
-
-//     if (!email || !password) {
-//         res.status(400).json({ error: { message: 'Need all fields' } });
-//     }
-
-//     try {
-
-//         const user = await prisma.user.findUnique({
-//             where: {
-//                 email: email
-//             }
-//         });
-
-//         const hashedPassword = hashData(password, user.salt);
-
-//         if (user.password === hashedPassword.hashed) {
-
-//             const newToken = generateAuthToken();
-
-//             const updateUser = await prisma.user.update({
-//                 where: {
-//                     email: email
-//                 },
-//                 data: {
-//                     authToken: {
-//                         create: newToken
-//                     }
-//                 }
-//             });
-
-//             res.status(200).cookie('AUTH_TOKEN', newToken.token, cookieOptions).cookie('AUTH_ID', user.id, cookieOptions).json({ result: { name: user.name, email: user.email } });
-//             await prisma.$disconnect();
-//             return true;
-//         }
-
-//     } catch (e) {
-//         console.log(e);
-//         res.status(400).json({ error: e });
-//         await prisma.$disconnect();
-//         return false;
-//     }
-// });
-
 router.post('/login', async (req, res) => {
 
     const { email, password } = req.body;
 
     if (!email || !password) {
         res.status(400).json({ error: { message: 'Need all fields' } });
+        return false;
     }
 
     try {
@@ -165,26 +83,17 @@ router.post('/login', async (req, res) => {
 
 });
 
-// router.get('/checktoken', async (req, res) => {
-//     const { AUTH_TOKEN: token, AUTH_ID: id } = req.cookies;
-
-//     console.log(id, token);
-
-//     if (token && id && await checkToken(token, id, res)) {
-//         res.status(200).json({ result: true })
-//     } else {
-//         res.status(200).json({ result: false })
-//     }
-// });
-
 router.get('/checktoken', async (req, res) => {
     const { AUTH_TOKEN: token, AUTH_ID: id } = req.cookies;
     console.log('checking token');
 
     if (token && id && await checkToken(token, id)) {
         res.status(200).json({ result: true});
+        return true;
     } else {
         res.status(200).json({ result: false });
+        return false;
+
     }
 });
 
