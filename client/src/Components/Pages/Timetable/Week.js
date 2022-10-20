@@ -136,7 +136,7 @@ class Week extends React.Component {
 
         const {events, subjects, data, numDays: highestDay} = this.state;
 
-        const hourlyHeight = 85;
+        const hourlyHeight = 70;
         const offsetHours = (Number(events[0].startTime) - 60).toString().padStart(4, '0');
         
         return (
