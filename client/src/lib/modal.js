@@ -11,7 +11,7 @@ initial();
 
 function createModal(Modal) {
 
-    const modal = (<div className={styles.wrapper}><Modal /></div>);
+    const modal = (<div className={styles.wrapper} onClick={closeModal}><Modal onClick={(e) => {e.stopPropagation()}} /></div>);
 
     if (root._internalRoot === null) {
         root = ReactDOM.createRoot(
@@ -25,7 +25,12 @@ function createModal(Modal) {
 }
 
 function closeModal() {
-    root.unmount();
+
+    document.querySelector('#modalroot').firstChild.firstChild.classList.add(styles.closing);
+    setTimeout(() => {
+        root.unmount();
+    }, 50)
+    
 }
 
 export { createModal, closeModal };

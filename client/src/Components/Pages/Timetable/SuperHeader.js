@@ -11,11 +11,12 @@ class SuperHeader extends React.Component {
 
         class AddModal extends React.Component {
 
-            constructor() {
-                super();
+            constructor(props) {
+                super(props);
 
                 this.state = {
-                    text: ''
+                    text: '',
+                    props: props
                 };
                 this.handleChange = this.handleChange.bind(this);
                 this.close = this.close.bind(this);
@@ -39,7 +40,7 @@ class SuperHeader extends React.Component {
 
             render() {
                 return (
-                    <div className={modalStyles.modal}>
+                    <div className={modalStyles.modal} {...this.state.props}>
                         <div className={modalStyles.header}>
                             <div className={modalStyles.title}>+ Add class</div>
                             <div className={modalStyles.close} onClick={this.close}><Icon.X className={`icon ${modalStyles.icon}`} /></div>
@@ -51,7 +52,7 @@ class SuperHeader extends React.Component {
                         </div>
                         <div className={modalStyles.footer}>
                             <div className={modalStyles.action}>
-                                <button type="button" onClick={this.handleOkay}>Continue</button>
+                                <button type="button" className={`${modalStyles.okayButton} primary`} onClick={this.handleOkay}>Continue</button>
                             </div>
                         </div>
                     </div>
