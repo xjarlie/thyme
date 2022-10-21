@@ -64,11 +64,11 @@ class Login extends React.Component {
 
                 <span className={styles.header}>Log In</span>
 
-                <div className={styles.formInput}>
+                <div className={"formInput"}>
                     <input type={"email"} id={"email"} value={this.state.email} name="email" onChange={this.handleChange} placeholder={"Email"} />
                 </div>
 
-                <div className={styles.formInput}>
+                <div className={"formInput"}>
                     <input type={"password"} id={"password"} className="passwordInput" value={this.state.password} name="password" onChange={this.handleChange} placeholder={"Password"} />
                     <button type='button' onClick={this.togglePassword} id={'showPassword'} className={styles.showPassword}>
                         <Icon.Eye className={styles.icon} />
