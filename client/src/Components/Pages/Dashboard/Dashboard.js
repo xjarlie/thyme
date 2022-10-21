@@ -3,11 +3,6 @@ import withLoaderData from "../../../lib/withLoaderData";
 import createModal from "../../../lib/modal";
 
 class Dashboard extends React.Component {
-
-    buttonClick() {
-        console.log(createModal({title: 'helloworld'}));
-    }
-
     render() {
         return (
             <div>

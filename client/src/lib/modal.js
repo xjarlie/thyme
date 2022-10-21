@@ -9,9 +9,9 @@ function initial() {
 }
 initial();
 
-function createModal(props) {
+function createModal(Modal) {
 
-    const modal = (<div className={styles.modal} id={Math.random()}>hello world</div>);
+    const modal = (<div className={styles.wrapper}><Modal /></div>);
 
     if (root._internalRoot === null) {
         root = ReactDOM.createRoot(
@@ -19,19 +19,13 @@ function createModal(props) {
         )
     }
 
-    const random = Math.random();
-    if (random > 0.5) {
-        console.log('remopving', root)
-        
-        root.unmount();
-    } else {
-        console.log('adding', root)
-        
-        root.render(modal);
-    }
-
+    root.render(modal);
     
     return modal;
 }
 
-export default createModal;
+function closeModal() {
+    root.unmount();
+}
+
+export { createModal, closeModal };
