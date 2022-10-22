@@ -1,4 +1,5 @@
 import styles from './css/App.module.css';
+import { global } from './lib/global.js';
 
 import React from 'react';
 import Navbar from './Components/Global/Navbar.js';
@@ -23,7 +24,10 @@ class App extends React.Component {
 }
 
 async function loader() {
-  const response = await fetch('http://localhost:4000/auth/checktoken', {
+
+  global.hostname = `${window.location.protocol}//${window.location.hostname}`;
+
+  const response = await fetch(`${global.hostname}:4000/auth/checktoken`, {
     method: 'GET',
     credentials: 'include'
   });

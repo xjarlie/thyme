@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../../Global/Navbar.js";
 import styles from "../../../css/Auth.module.css";
+import { global } from "../../../lib/global.js";
 
 class Auth extends React.Component {
     render() {
@@ -18,7 +19,7 @@ class Auth extends React.Component {
 
 
 async function loader() {
-    const response = await fetch('http://localhost:4000/auth/checktoken', {
+    const response = await fetch(`${global.hostname}:4000/auth/checktoken`, {
         method: 'GET',
         credentials: 'include'
     });

@@ -1,6 +1,6 @@
 import React from "react";
 import withLoaderData from "../../../lib/withLoaderData";
-import createModal from "../../../lib/modal";
+import { global } from "../../../lib/global.js";
 
 class Dashboard extends React.Component {
     render() {
@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
 }
 
 async function loader() {
-    return await fetch(`http://localhost:4000/user/details`, {
+    return await fetch(`${global.hostname}:4000/user/details`, {
         credentials: 'include'
     });
 }

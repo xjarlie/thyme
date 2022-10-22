@@ -12,7 +12,7 @@ async function checkToken(token, id) {
             }
         });
 
-        if (user.authToken === token) {
+        if (user && user.authToken === token) {
             return true;
         } else {
             return false;

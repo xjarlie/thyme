@@ -33,7 +33,7 @@ class Signup extends React.Component {
             password: this.state.password
         }
 
-        const response = await fetch('http://localhost:4000/auth/signup', {
+        const response = await fetch(`${global.hostname}:4000/auth/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

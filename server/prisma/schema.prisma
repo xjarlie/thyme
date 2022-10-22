@@ -23,12 +23,20 @@ model User {
 }
 
 model Timetable {
-  id        String            @id @default(uuid())
-  timestamp DateTime          @default(now())
+  id        String    @id @default(uuid())
+  timestamp DateTime  @default(now())
   subjects  Subject[]
-  instances SubjectInstance[]
-  user      User              @relation(fields: [userID], references: [id])
+  user      User      @relation(fields: [userID], references: [id])
   userID    String
+  weeks     Week[]
+}
+
+model Week {
+  id          String            @id @default(uuid())
+  number      Int
+  instances   SubjectInstance[]
+  timetable   Timetable         @relation(fields: [timetableID], references: [id])
+  timetableID String
 }
 
 model Subject {
@@ -45,17 +53,17 @@ model Subject {
 }
 
 model SubjectInstance {
-  id          String     @id @default(uuid())
-  timestamp   DateTime   @default(now())
-  subject     Subject    @relation(fields: [subjectID], references: [id])
-  subjectID   String
-  day         String
-  time        String
-  room        String?
-  teacher     String?
-  userID      String
-  timetable   Timetable? @relation(fields: [timetableID], references: [id])
-  timetableID String?
+  id        String   @id @default(uuid())
+  timestamp DateTime @default(now())
+  subject   Subject  @relation(fields: [subjectID], references: [id])
+  subjectID String
+  day       String
+  time      String
+  room      String?
+  teacher   String?
+  userID    String
+  week      Week?    @relation(fields: [weekID], references: [id])
+  weekID    String?
 }
 
 model Task {

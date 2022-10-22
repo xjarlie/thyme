@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App, { loader as AppLoader } from './App';
 import Dashboard, { loader as DashLoader } from './Components/Pages/Dashboard/Dashboard.js';
-import Timetable from './Components/Pages/Timetable/Timetable.js';
+import Timetable, { loader as TimetableLoader } from './Components/Pages/Timetable/Timetable.js';
 import Tasks from './Components/Pages/Tasks/Tasks.js';
 import Auth, { loader as AuthLoader } from './Components/Pages/Auth/Auth.js';
 import Signup from './Components/Pages/Auth/Signup.js';
@@ -27,7 +27,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'timetable',
-        element: <Timetable />
+        element: <Timetable />,
+        loader: TimetableLoader
       },
       {
         path: 'tasks',
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       }
     ],
     loader: AppLoader,
-    errorElement: <Navigate to={"/auth/login"} />
+    errorElement: <Navigate to={"/auth/login"} replace/>
   },
   {
     path: '/auth',
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
         element: <Login />
       }
     ],
-    errorElement: <Navigate to={"/dashboard"} />
+    errorElement: <Navigate to={"/dashboard"} replace/>
   }
 
 ]);

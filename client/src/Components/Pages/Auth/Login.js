@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../../../css/Auth.module.css";
 import * as Icon from 'react-feather';
 import { Link } from "react-router-dom";
+import { global } from "../../../lib/global.js";
 
 class Login extends React.Component {
 
@@ -23,7 +24,7 @@ class Login extends React.Component {
             password: this.state.password
         }
 
-        const response = await fetch('http://localhost:4000/auth/login', {
+        const response = await fetch(`${global.hostname}:4000/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
