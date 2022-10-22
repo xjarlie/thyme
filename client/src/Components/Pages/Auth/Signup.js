@@ -66,19 +66,19 @@ class Signup extends React.Component {
             <div className={styles.form}>
                 <span className={styles.header}>Create Account</span>
 
-                <div className={styles.formInput}>
+                <div className={"formInput"}>
                     <input type={"text"} onChange={this.handleChange} id={"nameInput"} value={this.state.name} name={"name"} placeholder={"Name"} />
                 </div>
-                <div className={styles.formInput}>
+                <div className={"formInput"}>
                     <input type={"email"} onChange={this.handleChange} id={"emailInput"} value={this.state.email} name={"email"} placeholder={"Email"} />
                 </div>
-                <div className={styles.formInput}>
+                <div className={"formInput"}>
                     <input type={"password"} onChange={this.handleChange} id={"passwordInput"} value={this.state.password} name={"password"} placeholder={"Password"} className="passwordInput" />
                     <button type='button' onClick={this.togglePassword} id={'showPassword'} className={styles.showPassword}>
                         <Icon.Eye className={styles.icon} />
                     </button>
                 </div>
-                <div className={styles.formInput}>
+                <div className={"formInput"}>
                     <input type={"password"} className="passwordInput" onChange={this.handleChange} id={"password2Input"} value={this.state.password2} name={"password2"} placeholder={"Repeat password"} />
                     <button type='button' onClick={this.togglePassword} id={'showPassword'} className={styles.showPassword}>
                         <Icon.Eye className={styles.icon} />
