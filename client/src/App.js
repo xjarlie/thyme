@@ -8,7 +8,6 @@ import { Outlet } from 'react-router-dom';
 
 class App extends React.Component {
   render() {
-    console.log(styles)
     return (
       <div className={"app"}>
         <Navbar menu={true} />

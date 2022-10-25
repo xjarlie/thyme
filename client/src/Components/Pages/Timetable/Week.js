@@ -8,7 +8,7 @@ class Week extends React.Component {
     constructor() {
         super();
 
-        const data = [
+        const days = [
             {
                 dayName: 'Mon'
             },
@@ -119,7 +119,7 @@ class Week extends React.Component {
         if (activeDay > highestDay) activeDay = 0;
 
         this.state = {
-            data,
+            days,
             subjects,
             events,
             numDays: highestDay,
@@ -134,7 +134,7 @@ class Week extends React.Component {
 
     render() {
 
-        const {events, subjects, data, numDays: highestDay} = this.state;
+        const {events, subjects, days, numDays: highestDay} = this.state;
 
         const hourlyHeight = 70;
         const offsetHours = (Number(events[0].startTime) - 60).toString().padStart(4, '0');
@@ -144,7 +144,7 @@ class Week extends React.Component {
                 <div className={styles.dayHeaders}>
                     {
 
-                        Object.entries(data).map(([key, value]) => {
+                        Object.entries(days).map(([key, value]) => {
                             if (key <= highestDay) {
                                 return <DayHeader key={`${value.dayName}-header`} currentDay={this.state.activeDay} dayName={value.dayName} dayNumber={key} number={key} />
                             } else {
@@ -156,7 +156,7 @@ class Week extends React.Component {
                 </div>
                 <div className={styles.dayContent}>
                     {
-                        Object.entries(data).map(([key, value]) => {
+                        Object.entries(days).map(([key, value]) => {
                             const dayEvents = events.filter(o => o.day === Number(key));
                             
                             if (key <= highestDay) {

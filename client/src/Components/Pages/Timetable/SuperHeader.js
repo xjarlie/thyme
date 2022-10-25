@@ -1,64 +1,15 @@
 import React from "react";
 import styles from '../../../css/Timetable.module.css';
 import * as Icon from 'react-feather';
-import { createModal, closeModal } from "../../../lib/modal.js";
-import modalStyles from '../../../css/Modal.module.css';
+import { createModal } from "../../../lib/modal.js";
+import AddModal from "./AddModal";
 
 class SuperHeader extends React.Component {
 
     addClassBtnClick() {
 
 
-        class AddModal extends React.Component {
-
-            constructor(props) {
-                super(props);
-
-                this.state = {
-                    text: '',
-                    props: props
-                };
-                this.handleChange = this.handleChange.bind(this);
-                this.close = this.close.bind(this);
-                this.handleOkay = this.handleOkay.bind(this);
-            }
-
-            handleChange(e) {
-                this.setState({
-                    [e.target.name]: e.target.value
-                });
-            }
-
-            async handleOkay() {
-                console.log(this.state.text);
-                this.close();
-            }
-
-            close() {
-                closeModal();
-            }
-
-            render() {
-                return (
-                    <div className={modalStyles.modal} {...this.state.props}>
-                        <div className={modalStyles.header}>
-                            <div className={modalStyles.title}>+ Add class</div>
-                            <div className={modalStyles.close} onClick={this.close}><Icon.X className={`icon ${modalStyles.icon}`} /></div>
-                        </div>
-                        <div className={modalStyles.body}>
-                            <div className={"formInput"}>
-                                <input type={"text"} name={"text"} value={this.state.text} onChange={this.handleChange} />
-                            </div>
-                        </div>
-                        <div className={modalStyles.footer}>
-                            <div className={modalStyles.action}>
-                                <button type="button" className={`${modalStyles.okayButton} primary`} onClick={this.handleOkay}>Continue</button>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
-        }
+        
 
         createModal(AddModal);
     }

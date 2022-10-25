@@ -38,7 +38,8 @@
     right: 0;
     left: 0; */
     margin: auto;
-    width: max-content;
+    min-width: 320px;
+    width: 80%;
     height: max-content;
 
     animation: 0.1s ease 0s 1 growfromcenter;

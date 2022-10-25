@@ -32,36 +32,36 @@ model Timetable {
 }
 
 model Week {
-  id          String            @id @default(uuid())
+  id          String    @id @default(uuid())
   number      Int
-  instances   SubjectInstance[]
-  timetable   Timetable         @relation(fields: [timetableID], references: [id])
+  events      Event[]
+  timetable   Timetable @relation(fields: [timetableID], references: [id])
   timetableID String
 }
 
 model Subject {
-  id          String            @id @default(uuid())
-  timestamp   DateTime          @default(now())
+  id          String    @id @default(uuid())
+  timestamp   DateTime  @default(now())
   name        String
   color       String
-  timetable   Timetable         @relation(fields: [timetableID], references: [id])
+  timetable   Timetable @relation(fields: [timetableID], references: [id])
   timetableID String
-  instances   SubjectInstance[]
+  events      Event[]
   tasks       Task[]
-  user        User              @relation(fields: [userID], references: [id])
+  user        User      @relation(fields: [userID], references: [id])
   userID      String
 }
 
-model SubjectInstance {
+model Event {
   id        String   @id @default(uuid())
   timestamp DateTime @default(now())
   subject   Subject  @relation(fields: [subjectID], references: [id])
   subjectID String
   day       String
-  time      String
+  startTime String
+  endTime   String
   room      String?
   teacher   String?
-  userID    String
   week      Week?    @relation(fields: [weekID], references: [id])
   weekID    String?
 }

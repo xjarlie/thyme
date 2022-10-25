@@ -3,6 +3,7 @@ import Week from "./Week";
 import SuperHeader from "./SuperHeader";
 import styles from "../../../css/Timetable.module.css";
 import { global } from "../../../lib/global.js";
+import withLoaderData from "../../../lib/withLoaderData.js";
 
 class Timetable extends React.Component {
 
@@ -10,7 +11,7 @@ class Timetable extends React.Component {
         return (
             <div className={styles.timetable}>
                 <SuperHeader />
-                <Week />
+                <Week loaderData={this.props.loaderData} />
             </div>
         )
     }
@@ -27,5 +28,5 @@ async function loader() {
     })
 }
 
-export default Timetable;
+export default withLoaderData(Timetable);
 export { loader };
