@@ -8,6 +8,8 @@ class Navbar extends React.Component {
     onMenuButtonClick() {
         const sidebar = document.querySelector(`.${sidebarStyles.sidebar}`);
         sidebar.classList.toggle(sidebarStyles.collapsed);
+
+        localStorage.setItem('sidebarCollapsed', sidebar.classList.contains(sidebarStyles.collapsed));
     }
 
     render() {
