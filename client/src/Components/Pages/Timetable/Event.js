@@ -17,6 +17,8 @@ class Event extends React.Component {
 
     render() {
 
+
+
         const maxHeight = this.props.maxHeight;
         const startTime = this.props.data.startTime;
         const endTime = this.props.data.endTime;
@@ -28,6 +30,8 @@ class Event extends React.Component {
         const endPos = this.getPos(endTime, maxHeight);
 
         const height = endPos - startPos;
+
+        console.log(this.props.data.startTime, startPos);
 
         // let color = 'aqua';
         // const currentTimeDate = new Date(global.get('time'));

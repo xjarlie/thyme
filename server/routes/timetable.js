@@ -33,7 +33,11 @@ router.get('/:userTimetableIndex', async (req, res) => {
                         subjects: true,
                         weeks: {
                             include: {
-                                events: true
+                                events: {
+                                    orderBy: {
+                                        startTime: 'asc'
+                                    }
+                                }
                             }
                         }
                     }
