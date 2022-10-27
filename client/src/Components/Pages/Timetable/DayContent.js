@@ -26,7 +26,7 @@ class DayContent extends React.Component {
 
                     return <Event key={key}
                         id={key}
-                        data={{ ...value, color: this.props.subjects[value.name].color, displayName: this.props.subjects[value.name].name }}
+                        data={{ ...value, color: this.props.subjects[value.subjectID].color, displayName: this.props.subjects[value.subjectID].name }}
                         maxHeight={this.props.height}
                         offset={this.props.offset}
                         connectTop={connectTop}

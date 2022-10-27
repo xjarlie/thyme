@@ -11,7 +11,7 @@ class Timetable extends React.Component {
         return (
             <div className={styles.timetable}>
                 <SuperHeader />
-                <Week loaderData={this.props.loaderData} />
+                <Week loaderData={this.props.loaderData} weekNum={0} />
             </div>
         )
     }

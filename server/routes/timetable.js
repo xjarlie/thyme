@@ -28,7 +28,16 @@ router.get('/:userTimetableIndex', async (req, res) => {
                 id: id
             },
             include: {
-                timetables: true
+                timetables: {
+                    include: {
+                        subjects: true,
+                        weeks: {
+                            include: {
+                                events: true
+                            }
+                        }
+                    }
+                }
             }
         });
         timetable = user.timetables[userTimetableIndex];
