@@ -86,7 +86,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/checktoken', async (req, res) => {
     const { AUTH_TOKEN: token, AUTH_ID: id } = req.cookies;
-    console.log('checking token');
+    console.log('checking token', token);
 
     if (token && id && await checkToken(token, id)) {
         res.json({ result: true});

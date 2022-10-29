@@ -114,6 +114,8 @@ class Week extends React.Component {
         const events = week.events;
         const subjects = timetable.subjects;
 
+        console.log(timetable, week , events, subjects);
+
 
         let objSubjects = {};
         for (const i in subjects) {
@@ -145,7 +147,8 @@ class Week extends React.Component {
     }
 
     componentDidMount() {
-        document.querySelector(`.${styles.timetable}`).style['min-width'] = `${170*(this.state.numDays+1)}px`
+        console.log((Number(this.state.numDays)+1)*170)
+        document.querySelector(`.${styles.timetable}`).style['min-width'] = `${170*(Number(this.state.numDays)+1)}px`
     }
 
     render() {
@@ -154,7 +157,8 @@ class Week extends React.Component {
         const {events, subjects, days, numDays: highestDay} = this.state;
 
         const hourlyHeight = 70;
-        const offsetHours = (Number(events[0].startTime) - 60).toString().padStart(4, '0');
+        const earliestStart = Number(events[0]?.startTime) - 60 || 0;
+        const offsetHours = (earliestStart).toString().padStart(4, '0');
         
         return (
             <div className={styles.week} >

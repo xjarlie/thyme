@@ -5,6 +5,7 @@ import React from 'react';
 import Navbar from './Components/Global/Navbar.js';
 import Sidebar from './Components/Global/Sidebar.js';
 import { Outlet } from 'react-router-dom';
+import { useRouteError, json, Navigate } from 'react-router-dom';
 
 class App extends React.Component {
   render() {
@@ -24,17 +25,28 @@ class App extends React.Component {
 
 async function loader() {
 
-  global.hostname = `${window.location.protocol}//${window.location.hostname}`;
+  console.log('appload');
 
-  const response = await fetch(`${global.hostname}:4000/auth/checktoken`, {
+  const response = await fetch(`${global.serverAddr}/auth/checktoken`, {
     method: 'GET',
     credentials: 'include'
   });
 
   if ((await response.json()).result === false) {
-    throw new Error('wasd');
+    console.log('apploadfailed')
+    throw json({ type: 'auth' })
+  }
+}
+
+function ErrorElement() {
+  let error = useRouteError();
+
+  if (error.data.type === 'auth') {
+    return <Navigate to={"/auth/login"} />
+  } else {
+    return <div>{JSON.stringify(error)}</div>
   }
 }
 
 export default App;
-export { loader };
+export { loader, ErrorElement };

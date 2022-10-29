@@ -23,7 +23,7 @@ async function loader() {
     // user timetable ofc
     // (inc subject list)
 
-    return await fetch(`${global.hostname}:4000/timetable/0`, {
+    return await fetch(`${global.serverAddr}/timetable/0`, {
         credentials: 'include'
     })
 }

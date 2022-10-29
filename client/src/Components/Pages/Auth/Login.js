@@ -24,7 +24,7 @@ class Login extends React.Component {
             password: this.state.password
         }
 
-        const response = await fetch(`${global.hostname}:4000/auth/login`, {
+        const response = await fetch(`${global.serverAddr}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -3,6 +3,7 @@ import withLoaderData from '../../../lib/withLoaderData.js';
 import styles from "../../../css/Auth.module.css";
 import * as Icon from 'react-feather';
 import { Link } from 'react-router-dom';
+import { global } from '../../../lib/global.js';
 
 class Signup extends React.Component {
 
@@ -33,7 +34,7 @@ class Signup extends React.Component {
             password: this.state.password
         }
 
-        const response = await fetch(`${global.hostname}:4000/auth/signup`, {
+        const response = await fetch(`${global.serverAddr}/auth/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

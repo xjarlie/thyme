@@ -44,6 +44,7 @@ class Event extends React.Component {
             <div className={styles.eventContainer} style={{top: startPos - offsetHours, height: height + 'px' }}>
                 <div className={`${styles.event} ${this.props.connectTop ? styles.connectTop : ''} ${this.props.connectBottom ? styles.connectBottom : ''}`} style={{ backgroundColor: this.props.data.color}}>
                     <span className={styles.title}>{this.props.data.displayName}</span>
+                    <span className={styles.center}></span>
                     <div className={styles.under}>
                         <span className={styles.room}>{this.props.data.room}</span>
                         <span className={styles.times}>{this.props.data.startTime} - {this.props.data.endTime}</span>

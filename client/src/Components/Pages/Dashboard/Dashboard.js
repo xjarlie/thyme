@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
 }
 
 async function loader() {
-    return await fetch(`${global.hostname}:4000/user/details`, {
+    return await fetch(`${global.serverAddr}/user/details`, {
         credentials: 'include'
     });
 }

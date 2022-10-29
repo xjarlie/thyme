@@ -14,7 +14,9 @@ const timetableRouter = require('./routes/timetable');
 const userRouter = require('./routes/user');
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: function (origin, callback) {
+        callback(null, origin)
+    },
     credentials: true
 }));
 app.use(compression());

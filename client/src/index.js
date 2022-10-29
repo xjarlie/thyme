@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App, { loader as AppLoader } from './App';
+import App, { loader as AppLoader, ErrorElement as AppError } from './App';
 import Dashboard, { loader as DashLoader } from './Components/Pages/Dashboard/Dashboard.js';
 import Timetable, { loader as TimetableLoader } from './Components/Pages/Timetable/Timetable.js';
 import Tasks from './Components/Pages/Tasks/Tasks.js';
-import Auth, { loader as AuthLoader } from './Components/Pages/Auth/Auth.js';
+import Auth, { loader as AuthLoader, ErrorElement as AuthError } from './Components/Pages/Auth/Auth.js';
 import Signup from './Components/Pages/Auth/Signup.js';
 import Login from './Components/Pages/Auth/Login.js';
 import "./index.css";
@@ -36,12 +36,13 @@ const router = createBrowserRouter([
       }
     ],
     loader: AppLoader,
-    errorElement: <Navigate to={"/auth/login"} replace/>
+    errorElement: <AppError />
   },
   {
     path: '/auth',
     element: <Auth />,
     loader: AuthLoader,
+    errorElement: <AuthError />,
     children: [
       {
         path: 'signup',
@@ -51,8 +52,7 @@ const router = createBrowserRouter([
         path: 'login',
         element: <Login />
       }
-    ],
-    errorElement: <Navigate to={"/dashboard"} replace/>
+    ]
   }
 
 ]);

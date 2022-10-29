@@ -2,7 +2,7 @@ import React from "react";
 import { closeModal } from "../../../lib/modal.js";
 import styles from '../../../css/Modal.module.css';
 import * as Icon from 'react-feather';
-import { global } from "../../../lib/global";
+import { post } from '../../../lib/fetch';
 
 class AddModal extends React.Component {
 
@@ -31,17 +31,8 @@ class AddModal extends React.Component {
         const eventData = this.state.data;
         console.log(eventData);
 
-        const response = await fetch(`${global.hostname}:4000/timetable/0/events`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify(eventData)
-        });
+        const { status, json } = await post('/timetable/0/events', eventData);
 
-        const status = response.status;
-        const json = await response.json();
         console.log(status, json);
 
         this.close();
