@@ -2,7 +2,6 @@ import React from "react";
 import Week from "./Week";
 import SuperHeader from "./SuperHeader";
 import styles from "../../../css/Timetable.module.css";
-import { global } from "../../../lib/global.js";
 import withLoaderData from "../../../lib/withLoaderData.js";
 import { get } from "../../../lib/fetch.js";
 
