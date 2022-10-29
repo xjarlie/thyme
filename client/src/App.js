@@ -6,6 +6,7 @@ import Navbar from './Components/Global/Navbar.js';
 import Sidebar from './Components/Global/Sidebar.js';
 import { Outlet } from 'react-router-dom';
 import { useRouteError, json, Navigate } from 'react-router-dom';
+import { get } from './lib/fetch.js';
 
 class App extends React.Component {
   render() {
@@ -27,12 +28,9 @@ async function loader() {
 
   console.log('appload');
 
-  const response = await fetch(`${global.serverAddr}/auth/checktoken`, {
-    method: 'GET',
-    credentials: 'include'
-  });
+  const {status} = await get('/auth/checktoken');
 
-  if ((await response.json()).result === false) {
+  if (status === 403) {
     console.log('apploadfailed')
     throw json({ type: 'auth' })
   }
@@ -44,7 +42,7 @@ function ErrorElement() {
   if (error.data.type === 'auth') {
     return <Navigate to={"/auth/login"} />
   } else {
-    return <div>{JSON.stringify(error)}</div>
+    return <div>Error: {JSON.stringify(error)}</div>
   }
 }
 

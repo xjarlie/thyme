@@ -40,16 +40,19 @@ model Week {
 }
 
 model Subject {
-  id          String    @id @default(uuid())
-  timestamp   DateTime  @default(now())
-  name        String
-  color       String
-  timetable   Timetable @relation(fields: [timetableID], references: [id])
-  timetableID String
-  events      Event[]
-  tasks       Task[]
-  user        User      @relation(fields: [userID], references: [id])
-  userID      String
+  id            String    @id @default(uuid())
+  lowerCaseName String
+  timestamp     DateTime  @default(now())
+  name          String
+  color         String
+  timetable     Timetable @relation(fields: [timetableID], references: [id])
+  timetableID   String
+  events        Event[]
+  tasks         Task[]
+  user          User      @relation(fields: [userID], references: [id])
+  userID        String
+
+  @@unique([userID, lowerCaseName])
 }
 
 model Event {

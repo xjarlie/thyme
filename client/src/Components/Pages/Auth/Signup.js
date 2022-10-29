@@ -47,6 +47,12 @@ class Signup extends React.Component {
         console.log(status, json);
 
         if (status === 200) {
+
+            const { token, id } = json.result;
+
+            localStorage.setItem('AUTH_TOKEN', token);
+            localStorage.setItem('AUTH_ID', id);
+
             window.location.reload();
         } else {
             alert('Signup error');

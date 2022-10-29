@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../lib/prisma');
 const crypto = require('crypto');
-const { checkToken } = require("../lib/checkToken");
+const authCheck = require('../lib/authCheck');
 
 const cookieOptions = { secure: true, httpOnly: true, maxAge: 5184000000 /* 60 days */, sameSite: 'none' };
 
@@ -25,7 +25,7 @@ router.post('/signup', async (req, res) => {
             data: data
         });
 
-        res.status(200).cookie('AUTH_TOKEN', authToken.token, cookieOptions).cookie('AUTH_ID', pushedData.id, cookieOptions).json({ result: { name: pushedData.name, email: pushedData.email } });
+        res.status(200).json({ result: { name: pushedData.name, email: pushedData.email, token: authToken.token, id: pushedData.id } });
         await prisma.$disconnect();
         return true;
     } catch (e) {
@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
                 }
             });
 
-            res.status(200).cookie('AUTH_TOKEN', newToken.token, cookieOptions).cookie('AUTH_ID', user.id, cookieOptions).json({ result: { name: user.name, email: user.email } });
+            res.status(200).json({ result: { name: user.name, email: user.email, token: newToken.token, id: user.id } });
             await prisma.$disconnect();
             return true;
         }
@@ -83,18 +83,11 @@ router.post('/login', async (req, res) => {
 
 });
 
+router.use('/checktoken', authCheck);
 
 router.get('/checktoken', async (req, res) => {
-    const { AUTH_TOKEN: token, AUTH_ID: id } = req.cookies;
-    console.log('checking token', token);
-
-    if (token && id && await checkToken(token, id)) {
-        res.json({ result: true});
-        return true;
-    } else {
-        res.json({ result: false });
-        return false;
-    }
+    console.log('checking token');
+    res.status(200).json({result: 'success'});
 });
 
 function hashData(string, salt) {

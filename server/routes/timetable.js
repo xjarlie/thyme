@@ -1,17 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const prisma = require('../lib/prisma');
-const { checkToken } = require('../lib/checkToken');
+const authCheck = require('../lib/authCheck');
+
+router.use(authCheck);
 
 router.get('/:userTimetableIndex', async (req, res) => {
 
-    const { AUTH_TOKEN: token, AUTH_ID: id } = req.cookies;
     const { userTimetableIndex } = req.params;
-
-    if (!token || !id || !(await checkToken(token, id))) {
-        res.status(401).json({ error: { message: 'Incorrect credentials' } });
-        return false;
-    }
+    const id = req.userID;
+    
 
     try {
         //rs
@@ -62,8 +60,23 @@ router.get('/:userTimetableIndex', async (req, res) => {
                             id: id
                         }
                     }
+                },
+                include: {
+                    subjects: true,
+                    weeks: {
+                        orderBy: {
+                            number: 'asc'
+                        },
+                        include: {
+                            events: {
+                                orderBy: {
+                                    startTime: 'asc'
+                                }
+                            }
+                        }
+                    }
                 }
-            })
+            });
         }
 
         if (timetable.userID !== id) {
@@ -85,15 +98,8 @@ router.get('/:userTimetableIndex', async (req, res) => {
 
 router.post('/:userTimetableIndex/events', async (req, res) => {
 
-    const { AUTH_TOKEN: token, AUTH_ID: id } = req.cookies;
     const { userTimetableIndex } = req.params;
-    
-
-    if (!token || !id || !(await checkToken(token, id))) {
-        res.status(401).json({ error: { message: 'Incorrect credentials' } });
-        return false;
-    }
-
+    const id = req.userID;
     const eventData = req.body;
 
     try {
@@ -115,11 +121,11 @@ router.post('/:userTimetableIndex/events', async (req, res) => {
 
         console.log(timetable);
 
-        if (!(timetable.subjects && timetable.subjects.some(e => e.id === eventData.subject.toLowerCase()))) {
+        if (!(timetable.subjects && timetable.subjects.some(e => e.lowerCaseName === eventData.subject.toLowerCase()))) {
             const subject = await prisma.subject.create({
                 data: {
                     name: eventData.subject,
-                    id: eventData.subject.toLowerCase(),
+                    lowerCaseName: eventData.subject.toLowerCase(),
                     color: randomColor(),
                     user: {
                         connect: {
@@ -144,7 +150,10 @@ router.post('/:userTimetableIndex/events', async (req, res) => {
                 room: eventData.room,
                 subject: {
                     connect: {
-                        id: eventData.subject.toLowerCase()
+                        userID_lowerCaseName: {
+                            userID: id,
+                            lowerCaseName: eventData.subject.toLowerCase()
+                        }
                     }
                 },
                 week: {

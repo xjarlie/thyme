@@ -4,6 +4,7 @@ import SuperHeader from "./SuperHeader";
 import styles from "../../../css/Timetable.module.css";
 import { global } from "../../../lib/global.js";
 import withLoaderData from "../../../lib/withLoaderData.js";
+import { get } from "../../../lib/fetch.js";
 
 class Timetable extends React.Component {
 
@@ -23,9 +24,7 @@ async function loader() {
     // user timetable ofc
     // (inc subject list)
 
-    return await fetch(`${global.serverAddr}/timetable/0`, {
-        credentials: 'include'
-    })
+    return (await get('/timetable/0')).json;
 }
 
 export default withLoaderData(Timetable);

@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../lib/prisma');
 const { checkToken } = require('../lib/checkToken');
+const authCheck = require('../lib/authCheck');
+
+router.use(authCheck);
 
 router.get('/details', async (req, res) => {
 
-    const { AUTH_TOKEN: token, AUTH_ID: userID } = req.cookies;
-    if (!(await checkToken(token, userID))) {
-        res.status(401).json({error: {message: 'Incorrect credentials'}});
-        return false;
-    }
+    const { userID } = req;
 
     try {
 

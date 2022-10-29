@@ -1,6 +1,6 @@
 import React from "react";
 import withLoaderData from "../../../lib/withLoaderData";
-import { global } from "../../../lib/global.js";
+import { get } from "../../../lib/fetch.js";
 
 class Dashboard extends React.Component {
     render() {
@@ -18,9 +18,8 @@ class Dashboard extends React.Component {
 }
 
 async function loader() {
-    return await fetch(`${global.serverAddr}/user/details`, {
-        credentials: 'include'
-    });
+    const { json } = await get('/user/details');
+    return json;
 }
 
 export default withLoaderData(Dashboard);
