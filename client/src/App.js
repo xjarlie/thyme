@@ -39,7 +39,7 @@ async function loader() {
 function ErrorElement() {
   let error = useRouteError();
 
-  if (error.data.type === 'auth') {
+  if (error.data?.type === 'auth') {
     return <Navigate to={"/auth/login"} />
   } else {
     return <div>Error: {JSON.stringify(error)}</div>
