@@ -8,8 +8,12 @@ RUN npm ci
 
 COPY . .
 
+RUN npm run client-build
+
 RUN npx prisma generate
 
-EXPOSE 4000
+ENV SERVER_PORT=3000
 
-CMD ["npm", "start"]
+EXPOSE 3000
+
+CMD ["node", "server.js"]

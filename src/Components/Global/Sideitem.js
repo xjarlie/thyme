@@ -13,7 +13,7 @@ class Sideitem extends React.Component {
 
     render() {
         return (
-            <NavLink to={`/${this.props.name.toLowerCase()}`} className={({ isActive  }) => isActive ? `${styles.sideitem} ${styles.active}` : styles.sideitem} id={`sidenav-${this.props.name.toLowerCase()}`} onClick={this.onLinkClick} >
+            <NavLink to={`${this.props.name.toLowerCase()}`} className={({ isActive  }) => isActive ? `${styles.sideitem} ${styles.active}` : styles.sideitem} id={`sidenav-${this.props.name.toLowerCase()}`} onClick={this.onLinkClick} >
                 <span className={styles.iconspan}><this.props.icon className={styles.icon} /></span>
                 <span className={styles.textspan}>{this.props.name}</span>
             </NavLink>

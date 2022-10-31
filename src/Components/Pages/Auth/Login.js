@@ -84,7 +84,7 @@ class Login extends React.Component {
 
                 <button type="button" onClick={this.onSubmit} className={"primary"}>Continue</button>
 
-                <Link className={styles.belowText} to={"/auth/signup"}>Don't have an account yet? Click <u>here</u></Link>
+                <Link className={styles.belowText} to={"../signup"}>Don't have an account yet? Click <u>here</u></Link>
             </div>
         )
     }

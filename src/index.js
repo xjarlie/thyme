@@ -13,7 +13,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/app',
     element: <App />,
     children: [
       {
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
     errorElement: <AppError />
   },
   {
-    path: '/auth',
+    path: '/app/auth',
     element: <Auth />,
     loader: AuthLoader,
     errorElement: <AuthError />,

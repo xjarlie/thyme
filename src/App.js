@@ -40,7 +40,7 @@ function ErrorElement() {
   let error = useRouteError();
 
   if (error.data?.type === 'auth') {
-    return <Navigate to={"/auth/login"} />
+    return <Navigate to={"/app/auth/login"} />
   } else {
     return <div>Error: {JSON.stringify(error)}</div>
   }

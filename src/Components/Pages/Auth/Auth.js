@@ -40,7 +40,7 @@ function ErrorElement() {
     console.log(error);
 
     if (error.data?.type === 'auth') {
-        return <Navigate to={"/"} />
+        return <Navigate to={"/app"} />
     } else {
         return <div>Error: {JSON.stringify(error)}</div>
     }

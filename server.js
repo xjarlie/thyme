@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.SERVER_PORT || 4000;
 
 const apiRouter = require('./routes/api');
 const authRouter = require('./routes/auth');
@@ -21,6 +21,7 @@ app.use(cors({
 }));
 app.use(compression());
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/app', express.static(path.join(__dirname, 'build')));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -29,10 +30,18 @@ app.use('/auth', authRouter);
 app.use('/timetable', timetableRouter);
 app.use('/user', userRouter);
 
+app.get('/app/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+app.get('/', (req, res) => {
+    res.redirect('/app');
+});
+
 // Keep this last
 app.get('/*', (req, res) => {
     // 404 page here
-    res.status(404).send('Error 404: Page not found');
+    res.status(404).send('Error 404: Page not found (Request error)');
 });
 
 app.listen(port, () => {
