@@ -9,9 +9,9 @@ function initial() {
 }
 initial();
 
-function createModal(Modal) {
+function createModal(Modal, data) {
 
-    const modal = (<div className={styles.wrapper} onClick={closeModal}><Modal onClick={(e) => {e.stopPropagation()}} /></div>);
+    const modal = (<div className={styles.wrapper} onClick={closeModal}><Modal onClick={(e) => {e.stopPropagation()}} data={data} /></div>);
 
     if (root._internalRoot === null) {
         root = ReactDOM.createRoot(

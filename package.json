@@ -8,14 +8,13 @@
     "server-test": "echo \"Error: no test specified\" && exit 1",
     "server-dev": "nodemon server.js",
     "server-start": "node server.js",
-    "server-build": "docker build . -t xjarlie/thyme-server",
     "client-start": "react-scripts start",
     "client-build": "react-scripts build",
     "client-test": "react-scripts test",
     "client-eject": "react-scripts eject",
-    "client-dockerbuild": "docker build . -t xjarlie/thyme-client",
     "build": "docker build . -t xjarlie/thyme",
-    "push": "docker push xjarlie/thyme"
+    "push": "docker push xjarlie/thyme",
+    "start": "concurrently \"npm run server-dev\" \"npm run client-start \""
   },
   "author": "",
   "license": "ISC",

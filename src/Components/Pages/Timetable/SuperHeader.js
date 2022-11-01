@@ -6,12 +6,14 @@ import AddModal from "./AddModal";
 
 class SuperHeader extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.addClassBtnClick = this.addClassBtnClick.bind(this);
+    }
+
     addClassBtnClick() {
-
-
-        
-
-        createModal(AddModal);
+        createModal(AddModal, this.props.loaderData);
     }
 
     render() {
