@@ -5,13 +5,22 @@
 .subjectWrapper>div {
 
     padding-bottom: 0;
+    position: relative;
 }
 
 .subjectWrapper .autocompleteWrapper {
-    border-radius: 0 12px;
+    border-radius: 0 0 12px 12px;
+    background-color: var(--color-dark-1);
+    position: absolute;
+    top: 0;
 }
 
 .subjectAutocomplete {
-    background-color: var(--color-dark-1);
+    background-color: transparent;
     padding: 0.65rem;
+    cursor: pointer;
+}
+
+.subjectAutocomplete:hover {
+    background-color: var(--color-dark-05);
 }

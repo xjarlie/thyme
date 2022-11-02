@@ -13,7 +13,13 @@ class AddModal extends React.Component {
         super(props);
 
         this.state = {
-            data: {},
+            data: {
+                subject: '',
+                startTime: '',
+                endTime: '',
+                room: '',
+                day: ''
+            },
             props: props,
             filteredSubjects: []
         };
@@ -21,14 +27,16 @@ class AddModal extends React.Component {
         this.close = this.close.bind(this);
         this.handleOkay = this.handleOkay.bind(this);
         this.handleSubjectChange = this.handleSubjectChange.bind(this);
+        this.handleAutocompleteClick = this.handleAutocompleteClick.bind(this);
     }
 
     handleChange(e) {
         const prevData = this.state.data;
         prevData[e.target.name] = e.target.value;
         this.setState({
-            data: prevData
+            data: {...prevData}
         });
+        console.log('STATE', this.state);
     }
 
     handleSubjectChange(e) {
@@ -39,13 +47,10 @@ class AddModal extends React.Component {
             return o.lowerCaseName.includes(e.target.value.toLowerCase());
         });
 
-        const prevData = this.state.data;
-        prevData[e.target.name] = e.target.value;
         this.setState({
-            filteredSubjects: filtered,
-            data: prevData
+            filteredSubjects: filtered
         });
-        console.log(this.state.filteredSubjects);
+        this.handleChange(e);
     }
 
     async handleOkay() {
@@ -58,6 +63,19 @@ class AddModal extends React.Component {
         console.log(status, json);
 
         this.close();
+    }
+
+    handleAutocompleteClick(e) {
+
+        document.querySelector(`input#subject`).value = e.target.getAttribute('name');
+
+        const prevData = this.state.data;
+        prevData['subject'] = e.target.getAttribute('name');
+        this.setState({
+            filteredSubjects: [],
+            data: {...prevData}
+        });
+        console.log(this.state.data);
     }
 
     close() {
@@ -75,13 +93,13 @@ class AddModal extends React.Component {
                 <div className={styles.body}>
                     <div className={styles.subjectWrapper}>
                         <div className={"formInput"}>
-                            <input type={"text"} name={"subject"} value={this.state.text} onChange={this.handleSubjectChange} placeholder="Subject" />
+                            <input type={"text"} name={"subject"} id={"subject"} value={this.state.subject} onChange={this.handleSubjectChange} placeholder="Subject" />
                         </div>
                         <div className={styles.autocompleteWrapper}>
                             {
                                 this.state.filteredSubjects.map((subject) => {
                                     return (
-                                        <div className={styles.subjectAutocomplete} key={subject.name}>
+                                        <div className={styles.subjectAutocomplete} name={subject.name} key={subject.name} onClick={this.handleAutocompleteClick}>
                                             {subject.name}
                                         </div>
                                     )
@@ -90,16 +108,16 @@ class AddModal extends React.Component {
                         </div>
                     </div>
                     <div className={"formInput"}>
-                        <input type={"text"} name={"startTime"} value={this.state.text} onChange={this.handleChange} placeholder="Start time" />
+                        <input type={"text"} name={"startTime"} value={this.state.startTime} onChange={this.handleChange} placeholder="Start time" />
                     </div>
                     <div className={"formInput"}>
-                        <input type={"text"} name={"endTime"} value={this.state.text} onChange={this.handleChange} placeholder="End time" />
+                        <input type={"text"} name={"endTime"} value={this.state.endTime} onChange={this.handleChange} placeholder="End time" />
                     </div>
                     <div className={"formInput"}>
-                        <input type={"text"} name={"room"} value={this.state.text} onChange={this.handleChange} placeholder="Room" />
+                        <input type={"text"} name={"room"} value={this.state.room} onChange={this.handleChange} placeholder="Room" />
                     </div>
                     <div className={"formInput"}>
-                        <input type={"text"} name={"day"} value={this.state.text} onChange={this.handleChange} placeholder="Day" />
+                        <input type={"text"} name={"day"} value={this.state.day} onChange={this.handleChange} placeholder="Day" />
                     </div>
                 </div>
                 <div className={styles.footer}>
