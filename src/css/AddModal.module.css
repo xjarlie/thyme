@@ -15,10 +15,11 @@
     left: 1;
 }
 
-.subjectWrapper input[name='subject']:not(:focus) + .autocompleteWrapper  {
+.subjectWrapper input[name='subject']:not(:focus) + .autocompleteWrapper  { 
     display: none;
     visibility: hidden;
 }
+/* ^^ doesnt work yet */
 
 .subjectAutocomplete {
     background-color: transparent;
