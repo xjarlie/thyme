@@ -12,7 +12,12 @@
     border-radius: 0 0 12px 12px;
     background-color: var(--color-dark-1);
     position: absolute;
-    top: 0;
+    left: 1;
+}
+
+.subjectWrapper input[name='subject']:not(:focus) + .autocompleteWrapper  {
+    display: none;
+    visibility: hidden;
 }
 
 .subjectAutocomplete {
@@ -22,5 +27,6 @@
 }
 
 .subjectAutocomplete:hover {
-    background-color: var(--color-dark-05);
+    background-color: var(--color-primary);
+    color: var(--color-dark-1);
 }

@@ -12,6 +12,10 @@ import "./css/Root.css";
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 
 const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <Navigate to="app" />
+    },
   {
     path: '/app',
     element: <App />,

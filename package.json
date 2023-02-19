@@ -14,7 +14,7 @@
     "client-eject": "react-scripts eject",
     "build": "docker build . -t xjarlie/thyme",
     "push": "docker push xjarlie/thyme",
-    "start": "concurrently \"npm run server-dev\" \"npm run client-start \""
+    "start": "concurrently \"npm run server-dev\" \"npm run client-start\""
   },
   "author": "",
   "license": "ISC",
