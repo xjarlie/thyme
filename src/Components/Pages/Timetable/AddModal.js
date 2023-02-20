@@ -4,6 +4,7 @@ import modalStyles from '../../../css/Modal.module.css';
 import addModalStyles from '../../../css/AddModal.module.css'
 import * as Icon from 'react-feather';
 import { post } from '../../../lib/fetch';
+import TimeInput from "./TimeInput.js";
 
 const styles = { ...addModalStyles, ...modalStyles };
 
@@ -27,6 +28,8 @@ class AddModal extends React.Component {
         this.close = this.close.bind(this);
         this.handleOkay = this.handleOkay.bind(this);
         this.handleSubjectChange = this.handleSubjectChange.bind(this);
+        this.handleSubjectBlur = this.handleSubjectBlur.bind(this);
+        this.handleSubjectFocus = this.handleSubjectFocus.bind(this);
         this.handleAutocompleteClick = this.handleAutocompleteClick.bind(this);
     }
 
@@ -51,6 +54,17 @@ class AddModal extends React.Component {
             filteredSubjects: filtered
         });
         this.handleChange(e);
+    }
+
+    handleSubjectBlur() {
+        console.log('here')
+        this.setState({
+            filteredSubjects: []
+        });
+    }
+
+    handleSubjectFocus(e) {
+        this.handleSubjectChange(e);
     }
 
     async handleOkay() {
@@ -93,9 +107,9 @@ class AddModal extends React.Component {
                 <div className={styles.body}>
                     <div className={styles.subjectWrapper}>
                         <div className={"formInput"}>
-                            <input type={"text"} name={"subject"} id={"subject"} value={this.state.subject} onChange={this.handleSubjectChange} placeholder="Subject" />
+                            <input type={"text"} name={"subject"} id={"subject"} value={this.state.subject} autoComplete={'off'} onFocus={this.handleSubjectFocus} onBlur={this.handleSubjectBlur} onChange={this.handleSubjectChange} placeholder="Subject" />
                         </div>
-                        <div className={styles.autocompleteWrapper}>
+                        <div className={`${styles.autocompleteWrapper}`}>
                             {
                                 this.state.filteredSubjects.map((subject) => {
                                     return (
@@ -108,7 +122,7 @@ class AddModal extends React.Component {
                         </div>
                     </div>
                     <div className={"formInput"}>
-                        <input type={"text"} name={"startTime"} value={this.state.startTime} onChange={this.handleChange} placeholder="Start time" />
+                        <TimeInput name={'startTime'} styles={styles} onChange={this.handleTimeChange} />
                     </div>
                     <div className={"formInput"}>
                         <input type={"text"} name={"endTime"} value={this.state.endTime} onChange={this.handleChange} placeholder="End time" />

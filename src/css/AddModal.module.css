@@ -15,11 +15,9 @@
     left: 1;
 }
 
-.subjectWrapper input[name='subject']:not(:focus) + .autocompleteWrapper  { 
-    display: none;
-    visibility: hidden;
+.timeInput {
+    
 }
-/* ^^ doesnt work yet */
 
 .subjectAutocomplete {
     background-color: transparent;
