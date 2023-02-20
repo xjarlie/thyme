@@ -1,22 +1,51 @@
-.subjectWrapper {
+div.subjectWrapper {
     width: 50%;
+    /* position: relative; */
+    display: flex;
+    flex-direction: column;
 }
 
 .subjectWrapper>div {
 
     padding-bottom: 0;
+    /* position: relative; */
+}
+
+.autoWrapperWrapper {
     position: relative;
+    height: 0;
+    width: 0;
 }
 
 .subjectWrapper .autocompleteWrapper {
     border-radius: 0 0 12px 12px;
     background-color: var(--color-dark-1);
     position: absolute;
-    left: 1;
+    top: 0;
 }
 
-.timeInput {
-    
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 50%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+div.timeWrapper {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding-right: 1rem;
+}
+
+.body > div {
+    width: 50%;
+}
+
+.timeWrapper label {
+    font-variation-settings: "wght" 325;
 }
 
 .subjectAutocomplete {
@@ -28,4 +57,15 @@
 .subjectAutocomplete:hover {
     background-color: var(--color-primary);
     color: var(--color-dark-1);
+}
+
+
+/* VALIDATION */
+.row div.valid input:not(:focus) {
+    border-color: var(--color-green);
+}
+
+.row div.invalid input:not(:focus) {
+    /* border-color: rgb(255, 78, 78); */
+    border-color: var(--color-red)
 }
