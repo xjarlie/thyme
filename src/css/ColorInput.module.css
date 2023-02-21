@@ -9,7 +9,7 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    
+
     transition: background-color 0.3s;
     color: white;
     font-size: 1.2rem;
@@ -69,14 +69,25 @@
 
 .colorCanvas {
     margin: 0.75rem;
-
+    position: relative;
 }
 
 .colorCanvas canvas {
     width: 200px;
     height: 200px;
-    border: 1px solid white;
+    border-radius: 5px;
+    position: relative;
+}
 
+.colorCanvas .marker {
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    background-color: none;
+    border: 3px solid white;
+    border-radius: 50%;
+    top: 0px;
+    left: 0px;
 }
 
 .colorSlider {
@@ -87,7 +98,9 @@
     width: 30px;
     height: 200px;
     border: 1px solid white;
+    position: relative;
 }
+
 
 .popup input.textInput {
     font-size: 1rem;

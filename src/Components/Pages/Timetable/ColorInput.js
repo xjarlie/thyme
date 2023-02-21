@@ -74,6 +74,10 @@ class ColorInput extends React.Component {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
+        const canvasMarker = document.querySelector('#canvasMarker');
+        canvasMarker.style.top = (y - (canvasMarker.offsetHeight / 2)) + 'px';
+        canvasMarker.style.left = (x - (canvasMarker.offsetWidth / 2)) + 'px';
+
         const pixel = ctx.getImageData(x, y, 1, 1)['data'];
         const rgb = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, 0)`;
         const hex = this.RGBAToHexA(rgb, true);
@@ -112,6 +116,7 @@ class ColorInput extends React.Component {
                     <div className={styles.colorPickers}>
                         <div className={styles.colorCanvas}>
                             <canvas id="color-picker" onMouseDown={this.handleCanvasClick} width={200} height={200} ></canvas>
+                            <span className={styles.marker} id={'canvasMarker'}></span>
                         </div>
                         <div className={styles.colorSlider}>
                             <canvas id="color-slider"></canvas>
