@@ -27,3 +27,43 @@
     background-color: var(--color-dark-05);
     color: var(--color-primary);
 }
+
+.mobileSelect {
+    display: none;
+}
+
+.mobileSelect select {
+    padding: 0.75rem;
+    background-color: var(--color-dark-1);
+    flex-grow: 1;
+    font-family: 'Josefin Sans', sans-serif;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    
+    transition: background-color 0.3s;
+    color: white;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    border-bottom: 4px inset var(--color-dark-2);
+    min-width: none;
+}
+
+.mobileSelect select:hover {
+    background-color: #2e2e2e;
+}
+
+.mobileSelect select:focus {
+    border-bottom: 4px inset var(--color-primary);
+    background-color: #1e1e1e;
+    outline: none;
+}
+
+@media screen and (max-width: 568px) {
+    .desktopSelect {
+        display: none;
+    }
+    .mobileSelect {
+        display: block;
+    }
+}

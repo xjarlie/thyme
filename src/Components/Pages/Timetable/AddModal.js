@@ -6,6 +6,7 @@ import * as Icon from 'react-feather';
 import { post } from '../../../lib/fetch';
 import TimeInput from "./TimeInput.js";
 import DayInput from "./DayInput.js";
+import ColorInput from "./ColorInput.js";
 
 const styles = { ...addModalStyles, ...modalStyles };
 
@@ -247,6 +248,11 @@ class AddModal extends React.Component {
                                     })
                                 }
                             </div>
+                        </div>
+                    </div>
+                    <div className={styles.row}>
+                        <div className={`formInput`}>
+                            <ColorInput />
                         </div>
                     </div>
                     <div className={styles.row}>
