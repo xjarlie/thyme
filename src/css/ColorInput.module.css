@@ -97,8 +97,8 @@
 .colorSlider canvas {
     width: 30px;
     height: 200px;
-    border: 1px solid white;
     position: relative;
+    border-radius: 5px;
 }
 
 

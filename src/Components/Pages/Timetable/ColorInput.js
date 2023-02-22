@@ -16,6 +16,7 @@ class ColorInput extends React.Component {
         this.handleChange = this.props.onChange;
         this.handleBlur = this.handleBlur.bind(this);
         this.handleCanvasClick = this.handleCanvasClick.bind(this);
+        this.handleSliderClick = this.handleSliderClick.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
@@ -63,6 +64,19 @@ class ColorInput extends React.Component {
 
         // Set slider value
 
+        const sliderCanvas = document.querySelector('canvas#color-slider');
+        const sliderCtx = sliderCanvas.getContext('2d');
+        // red, yellow, green, cyan, blue, magenta, red
+        // 0.14
+        const colors = [
+            'red', 'yellow', '#00ff00', 'cyan', 'blue', 'magenta', 'red'
+        ]
+        let sGradient = ctx.createLinearGradient(0, 0, 0, sliderCtx.canvas.height);
+        for (const i in colors) {
+            sGradient.addColorStop((i*(1/7)), colors[i]);
+        }
+        sliderCtx.fillStyle = sGradient;
+        sliderCtx.fillRect(0, 0, sliderCtx.canvas.width, sliderCtx.canvas.height);
     }
 
     handleCanvasClick(e) {
@@ -83,6 +97,26 @@ class ColorInput extends React.Component {
         const hex = this.RGBAToHexA(rgb, true);
         this.setState({
             color: hex
+        });
+    }
+
+    handleSliderClick(e) {
+        const slider = document.querySelector('canvas#color-slider');
+        const ctx = slider.getContext('2d');
+
+        const rect = slider.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const sliderMarker = document.querySelector('#sliderMarker');
+        sliderMarker.style.top = (y- (sliderMarker.offsetHeight / 2)) + 'px';
+        sliderMarker.style.left = (y - (sliderMarker.offsetWidth / 2)) + 'px';
+
+        const pixel = ctx.getImageData(x, y, 1, 1)['data'];
+        const rgb = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, 0)`;
+        const hex = this.RGBAToHexA(rgb, true);
+        this.setState({
+            sliderValue: hex
         });
     }
 
@@ -119,7 +153,8 @@ class ColorInput extends React.Component {
                             <span className={styles.marker} id={'canvasMarker'}></span>
                         </div>
                         <div className={styles.colorSlider}>
-                            <canvas id="color-slider"></canvas>
+                            <canvas id="color-slider" onMouseDown={this.handleSliderClick}  width={30} height={200}></canvas>
+                            <span className={styles.marker} id={'sliderMarker'}></span>
                         </div>
                     </div>
                     <input className={styles.textInput} placeholder={'#000000'} value={this.state.color} onChange={this.handleInputChange} />
