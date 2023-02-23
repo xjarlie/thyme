@@ -126,7 +126,7 @@ router.post('/:userTimetableIndex/events', async (req, res) => {
                 data: {
                     name: eventData.subject,
                     lowerCaseName: eventData.subject.toLowerCase(),
-                    color: randomColor(),
+                    color: eventData.color,
                     user: {
                         connect: {
                             id: id
