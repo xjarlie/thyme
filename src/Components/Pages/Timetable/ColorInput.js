@@ -9,7 +9,9 @@ class ColorInput extends React.Component {
 
         this.state = {
             color: '#000000',
-            sliderValue: '#f00'
+            sliderValue: '#f00',
+            canvasMarkerPos: { x: 0, y: 0 },
+            sliderMarkerY: 0
         }
 
         this.props = props;
@@ -40,12 +42,12 @@ class ColorInput extends React.Component {
     }
 
     componentDidMount() {
-
-
         // Set canvas value
 
+        // console.log(this.state);
+
         const canvas = document.querySelector('canvas#color-picker');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
         let gradientH = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
         gradientH.addColorStop(0, '#fff');
@@ -65,7 +67,7 @@ class ColorInput extends React.Component {
         // Set slider value
 
         const sliderCanvas = document.querySelector('canvas#color-slider');
-        const sliderCtx = sliderCanvas.getContext('2d');
+        const sliderCtx = sliderCanvas.getContext('2d', { willReadFrequently: true });
         // red, yellow, green, cyan, blue, magenta, red
         // 0.14
         const colors = [
@@ -73,51 +75,85 @@ class ColorInput extends React.Component {
         ]
         let sGradient = ctx.createLinearGradient(0, 0, 0, sliderCtx.canvas.height);
         for (const i in colors) {
-            sGradient.addColorStop((i*(1/7)), colors[i]);
+            sGradient.addColorStop((i * (1 / 7)), colors[i]);
         }
         sliderCtx.fillStyle = sGradient;
         sliderCtx.fillRect(0, 0, sliderCtx.canvas.width, sliderCtx.canvas.height);
+
+
+        const canvasCtx = document.querySelector('canvas#color-picker').getContext('2d', { willReadFrequently: true })
+        const markerPos = this.state.canvasMarkerPos;
+        const colorAtMarker = this.getCanvasAt(markerPos.x, markerPos.y, canvasCtx);
+        
+        if (this.state.color !== colorAtMarker) {
+            this.setState({
+                color: colorAtMarker
+            })
+        }
     }
 
     handleCanvasClick(e) {
 
         const canvas = document.querySelector('canvas#color-picker');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        const canvasMarker = document.querySelector('#canvasMarker');
-        canvasMarker.style.top = (y - (canvasMarker.offsetHeight / 2)) + 'px';
-        canvasMarker.style.left = (x - (canvasMarker.offsetWidth / 2)) + 'px';
+        this.setState({
+            color: this.getCanvasAt(x, y, ctx),
+            canvasMarkerPos: {
+                x: (x - (canvasMarker.offsetWidth / 2)),
+                y: (y - (canvasMarker.offsetHeight / 2))
+            }
+        });
+    }
 
+    getCanvasAt(x, y, ctx) {
         const pixel = ctx.getImageData(x, y, 1, 1)['data'];
         const rgb = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, 0)`;
         const hex = this.RGBAToHexA(rgb, true);
-        this.setState({
-            color: hex
-        });
+        return hex;
     }
 
     handleSliderClick(e) {
         const slider = document.querySelector('canvas#color-slider');
-        const ctx = slider.getContext('2d');
+        const ctx = slider.getContext('2d', { willReadFrequently: true });
 
         const rect = slider.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        const sliderMarker = document.querySelector('#sliderMarker');
-        sliderMarker.style.top = (y- (sliderMarker.offsetHeight / 2)) + 'px';
-        sliderMarker.style.left = (y - (sliderMarker.offsetWidth / 2)) + 'px';
+        // const sliderMarker = document.querySelector('#sliderMarker');
+        // sliderMarker.style.top = (y - (sliderMarker.offsetHeight / 2)) + 'px';
 
-        const pixel = ctx.getImageData(x, y, 1, 1)['data'];
-        const rgb = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, 0)`;
-        const hex = this.RGBAToHexA(rgb, true);
+        const canvasCtx = document.querySelector('canvas#color-picker').getContext('2d', { willReadFrequently: true })
+
+        const sliderColor = this.getCanvasAt(x, y, ctx);
+
         this.setState({
-            sliderValue: hex
-        });
+            sliderValue: sliderColor
+        }, () => {
+            const canvasCtx = document.querySelector('canvas#color-picker').getContext('2d', { willReadFrequently: true })
+            const markerPos = this.state.canvasMarkerPos;
+            const colorAtMarker = this.getCanvasAt(markerPos.x, markerPos.y, canvasCtx);
+            console.log(colorAtMarker);
+
+            // this.setState({
+            //     color: colorAtMarker
+            // }, () => {
+            //     this.componentDidMount();
+            // });
+        })
+
+        // this.setState({
+        //     sliderValue: this.getCanvasAt(x, y, ctx),
+        //     sliderMarkerY: (y - (sliderMarker.offsetHeight / 2)),
+        //     color: this.getCanvasAt(this.state.canvasMarkerPos.x, this.state.canvasMarkerPos.y, canvasCtx)
+        // }, () => {
+        //     this.componentDidMount();
+        // });
     }
 
     handleInputChange(e) {
@@ -150,10 +186,10 @@ class ColorInput extends React.Component {
                     <div className={styles.colorPickers}>
                         <div className={styles.colorCanvas}>
                             <canvas id="color-picker" onMouseDown={this.handleCanvasClick} width={200} height={200} ></canvas>
-                            <span className={styles.marker} id={'canvasMarker'}></span>
+                            <span className={styles.marker} id={'canvasMarker'} style={{ top: this.state.canvasMarkerPos.y + 'px', left: this.state.canvasMarkerPos.x + 'px' }} ></span>
                         </div>
                         <div className={styles.colorSlider}>
-                            <canvas id="color-slider" onMouseDown={this.handleSliderClick}  width={30} height={200}></canvas>
+                            <canvas id="color-slider" onMouseDown={this.handleSliderClick} width={30} height={200}></canvas>
                             <span className={styles.marker} id={'sliderMarker'}></span>
                         </div>
                     </div>
