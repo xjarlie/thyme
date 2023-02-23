@@ -55,7 +55,6 @@ class ColorInput extends React.Component {
         ctx.fillStyle = gradientH;
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-
         let gradientV = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
         gradientV.addColorStop(0, 'rgba(0,0,0,0)');
         gradientV.addColorStop(1, '#000');
@@ -107,6 +106,8 @@ class ColorInput extends React.Component {
                 x: (x - (canvasMarker.offsetWidth / 2)),
                 y: (y - (canvasMarker.offsetHeight / 2))
             }
+        }, () => {
+            this.componentDidMount();
         });
     }
 
@@ -135,10 +136,10 @@ class ColorInput extends React.Component {
         this.setState({
             sliderValue: sliderColor
         }, () => {
+            this.componentDidMount();
             const canvasCtx = document.querySelector('canvas#color-picker').getContext('2d', { willReadFrequently: true })
             const markerPos = this.state.canvasMarkerPos;
             const colorAtMarker = this.getCanvasAt(markerPos.x, markerPos.y, canvasCtx);
-            console.log(colorAtMarker);
 
             // this.setState({
             //     color: colorAtMarker
