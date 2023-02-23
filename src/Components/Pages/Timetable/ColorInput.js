@@ -126,9 +126,6 @@ class ColorInput extends React.Component {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        // const sliderMarker = document.querySelector('#sliderMarker');
-        // sliderMarker.style.top = (y - (sliderMarker.offsetHeight / 2)) + 'px';
-
         const canvasCtx = document.querySelector('canvas#color-picker').getContext('2d', { willReadFrequently: true })
 
         const sliderColor = this.getCanvasAt(x, y, ctx);
@@ -137,24 +134,7 @@ class ColorInput extends React.Component {
             sliderValue: sliderColor
         }, () => {
             this.componentDidMount();
-            const canvasCtx = document.querySelector('canvas#color-picker').getContext('2d', { willReadFrequently: true })
-            const markerPos = this.state.canvasMarkerPos;
-            const colorAtMarker = this.getCanvasAt(markerPos.x, markerPos.y, canvasCtx);
-
-            // this.setState({
-            //     color: colorAtMarker
-            // }, () => {
-            //     this.componentDidMount();
-            // });
-        })
-
-        // this.setState({
-        //     sliderValue: this.getCanvasAt(x, y, ctx),
-        //     sliderMarkerY: (y - (sliderMarker.offsetHeight / 2)),
-        //     color: this.getCanvasAt(this.state.canvasMarkerPos.x, this.state.canvasMarkerPos.y, canvasCtx)
-        // }, () => {
-        //     this.componentDidMount();
-        // });
+        });
     }
 
     handleInputChange(e) {
@@ -195,12 +175,13 @@ class ColorInput extends React.Component {
                         </div>
                     </div>
                     <input className={styles.textInput} placeholder={'#000000'} value={this.state.color} onChange={this.handleInputChange} />
-                    <div className={styles.presets}></div>
+                    <div className={styles.presets}>
+                        {/* TOOD: add preset pastel colors */}
+                    </div>
                 </div>
             </div>
         )
     }
-
 }
 
 export default ColorInput;
