@@ -79,11 +79,15 @@
     position: relative;
 }
 
-.colorCanvas .marker {
+.marker {
+    pointer-events: none;
     position: absolute;
+    background-color: none;
+}
+
+.colorCanvas .marker {
     height: 15px;
     width: 15px;
-    background-color: none;
     border: 3px solid white;
     border-radius: 50%;
     top: 0px;
@@ -91,7 +95,8 @@
 }
 
 .colorSlider {
-    margin: 0.75rem
+    margin: 0.75rem;
+    position: relative;
 }
 
 .colorSlider canvas {
@@ -101,6 +106,15 @@
     border-radius: 5px;
 }
 
+.colorSlider .marker {
+    height: 6px;
+    width: 35px;
+    border: 2px solid white;
+    border-radius: 20%;
+    translate: -2.5px;
+    top: 0;
+    left: 0;
+}
 
 .popup input.textInput {
     font-size: 1rem;

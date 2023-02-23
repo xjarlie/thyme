@@ -61,11 +61,10 @@ div.timeWrapper {
 
 
 /* VALIDATION */
-.row div.valid input:not(:focus) {
+.row div.valid input:not(:focus), .row div.valid div[role='input'] {
     border-color: var(--color-green);
 }
 
-.row div.invalid input:not(:focus) {
-    /* border-color: rgb(255, 78, 78); */
+.row div.invalid input:not(:focus), .row div.invalid div[role='input'] {
     border-color: var(--color-red)
 }

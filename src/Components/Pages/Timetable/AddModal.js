@@ -21,7 +21,8 @@ class AddModal extends React.Component {
                 startTime: '',
                 endTime: '',
                 room: '',
-                day: ''
+                day: '',
+                color: '#000000'
             },
             props: props,
             filteredSubjects: []
@@ -36,6 +37,10 @@ class AddModal extends React.Component {
         this.handleAutocompleteClick = this.handleAutocompleteClick.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.handleDayChange = this.handleDayChange.bind(this);
+        this.handleColorChange = this.handleColorChange.bind(this);
+
+        // TODO : add preview of subject block on RHS of modal,
+        // and add preset colors in ColorInput
     }
 
     handleChange(e) {
@@ -43,8 +48,9 @@ class AddModal extends React.Component {
         prevData[e.target.name] = e.target.value;
         this.setState({
             data: { ...prevData }
+        }, () => {
+            console.log('STATE', this.state.data)
         });
-        console.log('STATE', this.state);
     }
 
     handleSubjectChange(e) {
@@ -169,6 +175,10 @@ class AddModal extends React.Component {
                         currentValid = 1
                     }
                     break;
+                case 'color':
+                    const regex = new RegExp('^#(?:[0-9a-fA-F]{3}){1,2}$');
+                    currentValid = regex.test(value) ? 1 : 0;
+                    break;
             }
 
             if (!(value && value.length > 0)) currentValid = 2;
@@ -219,13 +229,16 @@ class AddModal extends React.Component {
         this.handleChange({ target: { name: 'day', value: value } });
     }
 
+    handleColorChange(value) {
+        this.handleChange({ target: { name: 'color', value: value } });
+    }
+
     close() {
         closeModal();
     }
 
     render() {
         return (
-
             <div className={styles.modal} {...this.state.props}>
                 <div className={styles.header}>
                     <div className={styles.title}>+ Add class</div>
@@ -234,7 +247,7 @@ class AddModal extends React.Component {
                 <div className={styles.body}>
                     <div className={`${styles.subjectWrapper} ${styles.row}`}>
                         <div className={"formInput"}>
-                            <input type={"text"} name={"subject"} id={"subject"} value={this.state.subject} autoComplete={'off'} onFocus={this.handleSubjectFocus} onBlur={this.handleSubjectBlur} onChange={this.handleSubjectChange} placeholder="Subject" />
+                            <input type={"text"} name={"subject"} id={"subject"} value={this.state.data.subject} autoComplete={'off'} onFocus={this.handleSubjectFocus} onBlur={this.handleSubjectBlur} onChange={this.handleSubjectChange} placeholder="Subject" />
                         </div>
                         <div className={styles.autoWrapperWrapper}>
                             <div className={`${styles.autocompleteWrapper}`}>
@@ -252,29 +265,24 @@ class AddModal extends React.Component {
                     </div>
                     <div className={styles.row}>
                         <div className={`formInput`}>
-                            <ColorInput />
+                            <ColorInput onChange={this.handleColorChange} onBlur={this.handleBlur} name={'color'} value={this.state.data.color} />
                         </div>
                     </div>
                     <div className={styles.row}>
                         <div className={`formInput ${styles.timeWrapper}`}>
                             <label htmlFor="startTime">Start Time:</label>
-                            <TimeInput name={'startTime'} value={this.state.startTime} styles={styles} onBlur={this.handleBlur} onChange={this.handleTimeChange} />
+                            <TimeInput name={'startTime'} value={this.state.data.startTime} styles={styles} onBlur={this.handleBlur} onChange={this.handleTimeChange} />
                         </div>
                         <div className={`formInput ${styles.timeWrapper}`}>
                             <label htmlFor="endTime">End Time:</label>
-                            <TimeInput name={"endTime"} value={this.state.endTime} styles={styles} onBlur={this.handleBlur}  onChange={this.handleTimeChange} />
+                            <TimeInput name={"endTime"} value={this.state.data.endTime} styles={styles} onBlur={this.handleBlur}  onChange={this.handleTimeChange} />
                         </div>
                     </div>
                     <div className={styles.row}>
                         <div className={`formInput `}>
-                            <input type={"text"} name={"room"} value={this.state.room} onBlur={this.handleBlur}  onChange={this.handleChange} placeholder="Room" />
+                            <input type={"text"} name={"room"} value={this.state.data.room} onBlur={this.handleBlur}  onChange={this.handleChange} placeholder="Room" />
                         </div>
                     </div>
-                    {/* <div className={styles.row}>
-                        <div className={`formInput `}>
-                            <input type={"text"} name={"day"} value={this.state.day} onBlur={this.handleBlur}  onChange={this.handleChange} placeholder="Day" />
-                        </div>
-                    </div> */}
                     <div className={styles.row}>
                         <div className={`formInput`}>
                             <DayInput name={'day'} onChange={this.handleDayChange} />
