@@ -87,6 +87,7 @@
     flex-direction: column;
     justify-content: center;
     color: white;
+    position: relative;
 }
 
 .event.connectTop {
@@ -112,12 +113,43 @@
     margin: 0 0 12px 0;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
     font-family: 'Josefin Sans', sans-serif;
     font-variation-settings: "wght" 600;
     padding: 0 12px;
 }
 
+.event .under .room {
+    
+}
+
+.event .times {
+    flex-grow: 1;
+    text-align: right;
+}
+
+.event .times .endTime {
+
+}
+
+.event:hover .edit {
+    visibility: visible;
+}
+
+.event .edit {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.event .edit svg {
+    aspect-ratio: 1 / 1;
+    height: auto;
+}
 
 .superHeader {
     width: 100%;

@@ -20,6 +20,7 @@ class ColorInput extends React.Component {
         this.handleCanvasClick = this.handleCanvasClick.bind(this);
         this.handleSliderClick = this.handleSliderClick.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handlePresetChange = this.handlePresetChange.bind(this);
 
     }
 
@@ -55,6 +56,14 @@ class ColorInput extends React.Component {
     handleInputChange(e) {
         const color = e.target.value;
         this.handleChange(color);
+    }
+
+    handlePresetChange(e) {
+        const color = e.target.dataset.value.toLowerCase();
+        requestAnimationFrame(() => {
+            this.handleClose();
+            this.handleChange(color);
+        })
     }
 
     RGBAToHexA(rgba, forceRemoveAlpha = false) {
@@ -125,7 +134,7 @@ class ColorInput extends React.Component {
         const canvasCtx = document.querySelector('canvas#color-picker').getContext('2d', { willReadFrequently: true });
 
         const canvasColor = this.getCanvasAt(this.state.canvasMarkerPos.x, this.state.canvasMarkerPos.y, canvasCtx);
-        
+
         const sliderMarker = document.querySelector('#sliderMarker');
 
         this.setState({
@@ -157,6 +166,9 @@ class ColorInput extends React.Component {
     }
 
     render() {
+
+        const presetColors = ['#C34D4D', '#712828', '#F35D5D', '#3F823E', '#59BB54', '#4DAEC3', '#403E8E', '#7A4DC3', '#AC3AA0', '#C3A94D']
+
         return (
             <div className={`${styles.colorInput}`} onClick={this.handleOpen} onBlur={this.handleBlur} tabIndex="0" role={'button'} name={this.props.name} >
                 <div className={styles.input} role='input'>
@@ -176,7 +188,9 @@ class ColorInput extends React.Component {
                     </div>
                     <input className={styles.textInput} placeholder={'#000000'} value={this.props.value} onChange={this.handleInputChange} />
                     <div className={styles.presets}>
-                        {/* TODO: add preset pastel colors */}
+                        {presetColors.map((i) => {
+                            return <span key={i} className={styles.presetColor} style={{ backgroundColor: i }} data-value={i} role='button' onClick={this.handlePresetChange} ></span>
+                        })}
                     </div>
                 </div>
             </div>

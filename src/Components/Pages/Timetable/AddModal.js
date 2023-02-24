@@ -7,6 +7,7 @@ import { post } from '../../../lib/fetch';
 import TimeInput from "./TimeInput.js";
 import DayInput from "./DayInput.js";
 import ColorInput from "./ColorInput.js";
+import Preview from "./Preview.js";
 
 const styles = { ...addModalStyles, ...modalStyles };
 
@@ -40,7 +41,6 @@ class AddModal extends React.Component {
         this.handleColorChange = this.handleColorChange.bind(this);
 
         // TODO : add preview of subject block on RHS of modal,
-        // and add preset colors in ColorInput
     }
 
     handleChange(e) {
@@ -49,7 +49,6 @@ class AddModal extends React.Component {
         this.setState({
             data: { ...prevData }
         }, () => {
-            console.log('STATE', this.state.data)
         });
     }
 
@@ -88,8 +87,6 @@ class AddModal extends React.Component {
 
         const eventData = {...this.state.data};
         
-        console.log(eventData);
-
         if (!this.validate(eventData)) {
             return false;
         }
@@ -101,7 +98,6 @@ class AddModal extends React.Component {
         //     alert('Not all fields filled');
         //     return false;
         // }
-        console.log(eventData.startTime, eventData.endTime)
 
         const { status, json } = await post('/timetable/0/events', eventData);
 
@@ -178,6 +174,7 @@ class AddModal extends React.Component {
                 case 'color':
                     const regex = new RegExp('^#(?:[0-9a-fA-F]{3}){1,2}$');
                     currentValid = regex.test(value) ? 1 : 0;
+                    if (value === '#000000') currentValid = 2;
                     break;
             }
 
@@ -185,7 +182,6 @@ class AddModal extends React.Component {
 
             const targetElement = document.querySelector(`[name="${i}"]`).parentElement;
 
-            console.log(currentValid, targetElement);
             if (currentValid === 1) {
                 targetElement.classList.remove(styles.invalid);
                 targetElement.classList.add(styles.valid);
@@ -206,7 +202,6 @@ class AddModal extends React.Component {
 
     handleAutocompleteClick(e) {
 
-        console.log('herefirst');
 
         document.querySelector(`input#subject`).value = e.target.getAttribute('name');
 
@@ -216,7 +211,6 @@ class AddModal extends React.Component {
             filteredSubjects: [],
             data: { ...prevData }
         });
-        console.log(this.state.data);
         this.handleBlur();
     }
 
@@ -225,7 +219,6 @@ class AddModal extends React.Component {
     }
 
     handleDayChange(value) {
-        console.log(value);
         this.handleChange({ target: { name: 'day', value: value } });
     }
 
@@ -245,6 +238,7 @@ class AddModal extends React.Component {
                     <div className={styles.close} onClick={this.close}><Icon.X className={`icon ${styles.icon}`} /></div>
                 </div>
                 <div className={styles.body}>
+                <Preview data={this.state.data} styles={styles} />
                     <div className={`${styles.subjectWrapper} ${styles.row}`}>
                         <div className={"formInput"}>
                             <input type={"text"} name={"subject"} id={"subject"} value={this.state.data.subject} autoComplete={'off'} onFocus={this.handleSubjectFocus} onBlur={this.handleSubjectBlur} onChange={this.handleSubjectChange} placeholder="Subject" />
