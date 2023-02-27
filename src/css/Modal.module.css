@@ -71,10 +71,18 @@
 .title {
     font-size: 1.5rem;
     font-variation-settings: "wght" 300;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.title svg {
+    --iconsize: 24px;
+    margin: 0 0.7rem 0 0rem;
 }
 
 .close {
-    --icon-size: 20px;
+    --iconsize: 24px;
     cursor: pointer;
 }
 

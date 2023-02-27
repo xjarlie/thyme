@@ -119,8 +119,22 @@ button.primary {
     justify-content: center;
 }
 
+button.primary:hover {
+
+    
+    background-color: var(--color-dark-0);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
 button.primary:active {
     background-color: var(--color-dark-0);
     color: var(--color-primary);
     border: 2px solid var(--color-primary);
+}
+
+.icon {
+    width: var(--iconsize);
+    height: auto;
+    aspect-ratio: 1 / 1;
 }
