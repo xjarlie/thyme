@@ -13,7 +13,7 @@ class SuperHeader extends React.Component {
     }
 
     addClassBtnClick() {
-        createModal(AddModal, this.props.loaderData);
+        createModal(AddModal, {subjects: this.props.loaderData.result.timetable?.subjects});
     }
 
     render() {

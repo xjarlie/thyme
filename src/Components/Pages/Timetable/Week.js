@@ -107,15 +107,10 @@ class Week extends React.Component {
         //     }
         // ];
 
-        console.log(this.props.loaderData);
-
         const timetable = this.props.loaderData.result.timetable;
         const week = timetable.weeks[this.props.weekNum];
         const events = week.events;
         const subjects = timetable.subjects;
-
-        console.log(timetable, week , events, subjects);
-
 
         let objSubjects = {};
         for (const i in subjects) {
@@ -143,11 +138,9 @@ class Week extends React.Component {
             activeDay
         }
         
-        console.log(this.state.events);
     }
 
     componentDidMount() {
-        console.log((Number(this.state.numDays)+1)*170)
         document.querySelector(`.${styles.timetable}`).style['min-width'] = `${170*(Number(this.state.numDays)+1)}px`
     }
 
@@ -179,8 +172,6 @@ class Week extends React.Component {
                     {
                         Object.entries(days).map(([key, value]) => {
                             const dayEvents = events.filter(o => o.day === key);
-
-                            console.log('dayevents', dayEvents)
                             
                             if (key <= highestDay) {
                                 return <DayContent key={`${value.dayName}-content`} currentDay={this.state.activeDay} dayName={value.dayName} events={dayEvents} subjects={subjects} number={key} height={hourlyHeight * 24} offset={offsetHours} />

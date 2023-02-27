@@ -8,6 +8,7 @@ import TimeInput from "./TimeInput.js";
 import DayInput from "./DayInput.js";
 import ColorInput from "./ColorInput.js";
 import Preview from "./Preview.js";
+import { parseTime } from "../../../lib/parseTime.js";
 
 const styles = { ...addModalStyles, ...modalStyles };
 
@@ -16,18 +17,33 @@ class AddModal extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            data: {
+        let data = {};
+
+        if (props.presetData) {
+            let presetData = props.presetData;
+            presetData.subject = props.subjects[presetData.subjectID].name;
+            presetData.startTime = parseTime(presetData.startTime, 'string');
+            presetData.endTime = parseTime(presetData.endTime, 'string');
+            console.log(presetData);
+            data = props.presetData;
+        } else {
+            data = {
                 subject: '',
                 startTime: '',
                 endTime: '',
                 room: '',
                 day: '',
                 color: '#000000'
-            },
-            props: props,
+            }
+        }
+
+        this.state = {
+            data: data,
             filteredSubjects: []
         };
+
+        this.props = props;
+
         this.handleChange = this.handleChange.bind(this);
         this.close = this.close.bind(this);
         this.handleOkay = this.handleOkay.bind(this);
@@ -54,7 +70,7 @@ class AddModal extends React.Component {
 
     handleSubjectChange(e) {
 
-        const subjects = this.props.data.result.timetable?.subjects;
+        const subjects = Object.values(this.props.subjects);
 
         const filtered = subjects.filter((o) => {
             return o.lowerCaseName.includes(e.target.value.toLowerCase());
@@ -66,7 +82,7 @@ class AddModal extends React.Component {
         this.handleChange(e);
     }
 
-    handleSubjectBlur() {
+    handleSubjectBlur(e) {
         setTimeout(() => {
             this.setState({
                 filteredSubjects: []
@@ -93,11 +109,6 @@ class AddModal extends React.Component {
 
         eventData.startTime = eventData.startTime.split(':')[0] + eventData.startTime.split(':')[1];
         eventData.endTime = eventData.endTime.split(':')[0] + eventData.endTime.split(':')[1];
-
-        // if (!(eventData.day && (eventData.startTime != 'undefined') && eventData.startTime && eventData.endTime && (eventData.endTime != 'undefined') && eventData.subject)) {
-        //     alert('Not all fields filled');
-        //     return false;
-        // }
 
         const { status, json } = await post('/timetable/0/events', eventData);
 
@@ -232,13 +243,13 @@ class AddModal extends React.Component {
 
     render() {
         return (
-            <div className={styles.modal} {...this.state.props}>
+            <div className={styles.modal} {...this.props}>
                 <div className={styles.header}>
-                    <div className={styles.title}>+ Add class</div>
+                    <div className={styles.title}>{this.props.edit === 'true' ? <Icon.Edit2 /> : <Icon.Plus />}{this.props.edit === 'true' ? 'Edit class' : 'Add class'}</div>
                     <div className={styles.close} onClick={this.close}><Icon.X className={`icon ${styles.icon}`} /></div>
                 </div>
                 <div className={styles.body}>
-                <Preview data={this.state.data} styles={styles} />
+                    <Preview data={this.state.data} styles={styles} />
                     <div className={`${styles.subjectWrapper} ${styles.row}`}>
                         <div className={"formInput"}>
                             <input type={"text"} name={"subject"} id={"subject"} value={this.state.data.subject} autoComplete={'off'} onFocus={this.handleSubjectFocus} onBlur={this.handleSubjectBlur} onChange={this.handleSubjectChange} placeholder="Subject" />

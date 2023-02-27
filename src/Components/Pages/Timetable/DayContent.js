@@ -30,7 +30,8 @@ class DayContent extends React.Component {
                         maxHeight={this.props.height}
                         offset={this.props.offset}
                         connectTop={connectTop}
-                        connectBottom={connectBottom} />
+                        connectBottom={connectBottom}
+                        allSubjects={this.props.subjects} />
                 })}
             </div>
         )

@@ -2,12 +2,21 @@ import React from "react";
 import styles from "../../../css/Timetable.module.css";
 import * as Icon from 'react-feather';
 import { createModal } from "../../../lib/modal";
-import EditModal from "./EditModal";
+import AddModal from "./AddModal";
+import { parseTime } from "../../../lib/parseTime";
 
 class Event extends React.Component {
 
+    constructor(props) {
+        super();
+
+        this.props = props;
+
+        this.handleEditClick = this.handleEditClick.bind(this);
+    }
+
     getPos(time, maxHeight) {
-        const { hours, minutes } = this.parseTime(time, 'number');
+        const { hours, minutes } = parseTime(time, 'number');
 
         const totHours = Math.round(((hours + (minutes / 60)) + Number.EPSILON) * 100) / 100
 
@@ -17,23 +26,8 @@ class Event extends React.Component {
 
     }
 
-    parseTime(time, format='string') {
-
-        let hours = time.slice(0,2);
-        let mins = time.slice(2);
-        if (format === 'number') {
-            hours = parseInt(hours);
-            mins = parseInt(mins);
-
-            return { hours, minutes: mins };
-        } else {
-            hours = parseInt(hours);
-            return `${hours}:${mins}`;
-        }
-    }
-
     handleEditClick() {
-        createModal(EditModal, this.props.data);
+        createModal(AddModal, { presetData: this.props.data, subjects: this.props.allSubjects });
     }
 
     render() {
@@ -50,17 +44,8 @@ class Event extends React.Component {
 
         const height = endPos - startPos;
 
-        console.log(this.props.data.startTime, startPos);
-
-        // let color = 'aqua';
-        // const currentTimeDate = new Date(global.get('time'));
-        // const currentStringTime = `${currentTimeDate.getHours()}${currentTimeDate.getMinutes()}`;
-        // if (parseInt(currentStringTime) >= parseInt(startTime) && parseInt(currentStringTime) < parseInt(endTime)) {
-        //     color = 'aquamarine';
-        // }
-
-        const formattedStart = this.parseTime(startTime, 'string');
-        const formattedEnd = this.parseTime(endTime, 'string');
+        const formattedStart = parseTime(startTime, 'string');
+        const formattedEnd = parseTime(endTime, 'string');
 
         return (
             <div className={styles.eventContainer} style={{top: startPos - offsetHours, height: height + 'px' }}>
