@@ -24,6 +24,7 @@ class AddModal extends React.Component {
             presetData.subject = props.subjects[presetData.subjectID].name;
             presetData.startTime = parseTime(presetData.startTime, 'string');
             presetData.endTime = parseTime(presetData.endTime, 'string');
+            
             console.log(presetData);
             data = props.presetData;
         } else {
@@ -43,6 +44,8 @@ class AddModal extends React.Component {
         };
 
         this.props = props;
+
+        console.log(this.state.data.startTime);
 
         this.handleChange = this.handleChange.bind(this);
         this.close = this.close.bind(this);
