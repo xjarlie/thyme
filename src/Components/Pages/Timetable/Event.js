@@ -27,7 +27,7 @@ class Event extends React.Component {
     }
 
     handleEditClick() {
-        createModal(AddModal, { presetData: this.props.data, subjects: this.props.allSubjects });
+        createModal(AddModal, { presetData: this.props.data, subjects: this.props.allSubjects, mode: 'edit' });
     }
 
     render() {

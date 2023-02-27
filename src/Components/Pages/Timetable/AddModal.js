@@ -20,13 +20,13 @@ class AddModal extends React.Component {
         let data = {};
 
         if (props.presetData) {
-            let presetData = props.presetData;
+            let presetData = {...props.presetData};
             presetData.subject = props.subjects[presetData.subjectID].name;
             presetData.startTime = parseTime(presetData.startTime, 'string');
             presetData.endTime = parseTime(presetData.endTime, 'string');
             
             console.log(presetData);
-            data = props.presetData;
+            data = presetData;
         } else {
             data = {
                 subject: '',
@@ -248,7 +248,7 @@ class AddModal extends React.Component {
         return (
             <div className={styles.modal} {...this.props}>
                 <div className={styles.header}>
-                    <div className={styles.title}>{this.props.edit === 'true' ? <Icon.Edit2 /> : <Icon.Plus />}{this.props.edit === 'true' ? 'Edit class' : 'Add class'}</div>
+                    <div className={styles.title}>{this.props.mode === 'edit' ? <Icon.Edit2 className={`icon`} /> : <Icon.Plus className={`icon`} />}{this.props.mode === 'edit' ? 'Edit class' : 'Add class'}</div>
                     <div className={styles.close} onClick={this.close}><Icon.X className={`icon ${styles.icon}`} /></div>
                 </div>
                 <div className={styles.body}>
