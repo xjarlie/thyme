@@ -8,6 +8,9 @@ import { get } from "../../../lib/fetch.js";
 class Timetable extends React.Component {
 
     render() {
+
+        
+
         return (
             <div className={styles.timetable}>
                 <SuperHeader loaderData={this.props.loaderData} />

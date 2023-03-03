@@ -97,6 +97,14 @@
 }
 
 .footer button.okayButton {
-    font-size: 1.1rem;
-    font-variation-settings: "wght" 600;
+    font-size: 1.2rem;
+    font-variation-settings: "wght" 650;
+
+    padding: 0.75rem;
+
+    align-items: center;
+}
+
+.footer button.okayButton svg {
+    margin-right: 0.5rem;
 }

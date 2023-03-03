@@ -137,11 +137,28 @@ class Week extends React.Component {
             numDays: highestDay,
             activeDay
         }
+
+        this.handleNextDay = this.handleNextDay.bind(this);
+        this.handlePrevDay = this.handlePrevDay.bind(this);
         
     }
 
     componentDidMount() {
         document.querySelector(`.${styles.timetable}`).style['min-width'] = `${170*(Number(this.state.numDays)+1)}px`
+    }
+
+    handleNextDay() {
+        const activeDay = Number(this.state.activeDay);
+        this.setState({
+            activeDay: activeDay + 1
+        })
+    }
+
+    handlePrevDay() {
+        const activeDay = Number(this.state.activeDay);
+        this.setState({
+            activeDay: activeDay - 1
+        })
     }
 
     render() {
@@ -160,7 +177,7 @@ class Week extends React.Component {
 
                         Object.entries(days).map(([key, value]) => {
                             if (key <= highestDay) {
-                                return <DayHeader key={`${value.dayName}-header`} currentDay={this.state.activeDay} dayName={value.dayName} dayNumber={key} number={key} />
+                                return <DayHeader key={`${value.dayName}-header`} currentDay={this.state.activeDay} handleNextDay={this.handleNextDay} handlePrevDay={this.handlePrevDay} dayName={value.dayName} dayNumber={key} number={key} />
                             } else {
                                 return false;
                             }

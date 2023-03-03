@@ -248,7 +248,7 @@ class AddModal extends React.Component {
         return (
             <div className={styles.modal} {...this.props}>
                 <div className={styles.header}>
-                    <div className={styles.title}>{this.props.mode === 'edit' ? <Icon.Edit2 strokeWidth={'1.5px'} className={`icon`} /> : <Icon.Plus className={`icon`} />}{this.props.mode === 'edit' ? 'Edit class' : 'Add class'}</div>
+                    <div className={styles.title}>{this.props.mode === 'edit' ? <Icon.Edit2 strokeWidth={'1.5px'} className={`icon`} /> : <Icon.Plus className={`icon`} />}{this.props.mode === 'edit' ? 'Edit class' : 'New class'}</div>
                     <div className={styles.close} onClick={this.close}><Icon.X className={`icon ${styles.icon}`} /></div>
                 </div>
                 <div className={styles.body}>
@@ -299,7 +299,7 @@ class AddModal extends React.Component {
                 </div>
                 <div className={styles.footer}>
                     <div className={styles.action}>
-                        <button type="button" className={`${styles.okayButton} primary`} onClick={this.handleOkay}>{this.props.mode === 'edit' ? 'Update subject' : 'Add subject'}</button>
+                        <button type="button" className={`${styles.okayButton} primary`} onClick={this.handleOkay}>{this.props.mode === 'edit' ? <Icon.Edit2 strokeWidth={'1.5px'} className={`icon`} /> : <Icon.Plus className={`icon`} />}{this.props.mode === 'edit' ? 'Update class' : 'Add class'}</button>
                     </div>
                 </div>
             </div>
