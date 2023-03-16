@@ -177,6 +177,53 @@ router.post('/:userTimetableIndex/events', async (req, res) => {
 
 });
 
+router.delete('/:userTimetableIndex/events/:eventID', async (req, res) => {
+    
+    const { userTimetableIndex, eventID } = req.params;
+    const id = req.userID;
+
+    try {
+
+        // const deleteEvent = prisma.event.delete({
+        //     where: {
+        //         id: eventID
+        //     }
+        // });
+
+        const event = prisma.event.findUnique({
+            where: {
+                id: eventID
+            },
+            include: {
+                week: {
+                    include: {
+                        timetable: true
+                    }
+                }
+            }
+        });
+
+        if (!event) {
+            res.status(404).json({ result: { message: 'Not found'} });
+            await prisma.$disconnect();
+            return false;
+        }
+
+        console.log(event.week.timetable.userID);
+
+        res.status(200).json({ result: { message: 'Success', eventID: eventID } });
+        await prisma.$disconnect();
+        return true;
+
+    } catch (e) {
+        console.log(e);
+        res.status(400).json({ error: e });
+        await prisma.$disconnect();
+        return false;
+    }
+
+});
+
 function randomColor() {
     return `#${(Math.round(Math.random() * 16777215)).toString(16)}`;
 }

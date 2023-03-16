@@ -64,6 +64,16 @@ div.timeWrapper {
     color: var(--color-dark-1);
 }
 
+button.deleteButton {
+    background-color: var(--color-red);
+    border-color: var(--color-red);
+}
+
+button.deleteButton:hover {
+    color: var(--color-red);
+    border-color: var(--color-red);
+}
+
 
 /* VALIDATION */
 .row div.valid input:not(:focus), .row div.valid div[role='input'] {

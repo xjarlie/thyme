@@ -58,8 +58,6 @@ class AddModal extends React.Component {
         this.handleBlur = this.handleBlur.bind(this);
         this.handleDayChange = this.handleDayChange.bind(this);
         this.handleColorChange = this.handleColorChange.bind(this);
-
-        // TODO : add preview of subject block on RHS of modal,
     }
 
     handleChange(e) {
@@ -122,6 +120,10 @@ class AddModal extends React.Component {
         } else {
             alert(json?.error);
         }
+    }
+
+    async handleEditOkay() {
+        // TODO: Add editing capability
     }
 
     validate(data) {
@@ -194,7 +196,9 @@ class AddModal extends React.Component {
 
             if (!(value && value.length > 0)) currentValid = 2;
 
-            const targetElement = document.querySelector(`[name="${i}"]`).parentElement;
+            const targetElement = document.querySelector(`[name="${i}"]`)?.parentElement;
+            
+            if (targetElement === undefined) continue;
 
             if (currentValid === 1) {
                 targetElement.classList.remove(styles.invalid);
@@ -212,6 +216,10 @@ class AddModal extends React.Component {
 
         return allValid;
 
+    }
+
+    async handleDelete() {
+        // TODO: Add deleting capability
     }
 
     handleAutocompleteClick(e) {
@@ -299,7 +307,10 @@ class AddModal extends React.Component {
                 </div>
                 <div className={styles.footer}>
                     <div className={styles.action}>
-                        <button type="button" className={`${styles.okayButton} primary`} onClick={this.handleOkay}>{this.props.mode === 'edit' ? <Icon.Edit2 strokeWidth={'1.5px'} className={`icon`} /> : <Icon.Plus className={`icon`} />}{this.props.mode === 'edit' ? 'Update class' : 'Add class'}</button>
+                        <button type="button" className={`${styles.okayButton} primary`} onClick={this.props.mode === 'edit' ? this.handleEditOkay : this.handleOkay}>{this.props.mode === 'edit' ? <Icon.Edit2 strokeWidth={'1.5px'} className={`icon`} /> : <Icon.Plus className={`icon`} />}{this.props.mode === 'edit' ? 'Update class' : 'Add class'}</button>
+                    </div>
+                    <div className={styles.action}>
+                        {this.props.mode === 'edit' ? <button type="button" className={`primary ${styles.deleteButton} ${styles.okayButton}`} onClick={this.handleDelete}> <Icon.Trash2 strokeWidth={'1.5px'} className={`icon`} /> Delete class</button> : ''}
                     </div>
                 </div>
             </div>
