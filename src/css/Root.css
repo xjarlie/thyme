@@ -133,6 +133,26 @@ button.primary:active {
     border: 2px solid var(--color-primary);
 }
 
+button.negative {
+    background-color: var(--color-red);
+    border: 2px solid var(--color-red);
+    color: black;
+    font-size: 1.5rem;
+    border-radius: 6px;
+    padding: 0.5rem;
+    transition: background-color 0.3s;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+}
+
+button.negative:hover {
+    background-color: var(--color-dark-0);
+    color: var(--color-red);
+    border: 2px solid var(--color-red);
+}
+
 .icon {
     width: var(--iconsize);
     height: auto;

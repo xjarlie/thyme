@@ -1,7 +1,7 @@
 import React from "react";
 import { closeModal } from "../../../lib/modal.js";
-import modalStyles from '../../../css/Modal.module.css';
 import addModalStyles from '../../../css/AddModal.module.css'
+import modalStyles from '../../../css/Modal.module.css';
 import * as Icon from 'react-feather';
 import { post } from '../../../lib/fetch';
 import TimeInput from "./TimeInput.js";
@@ -58,6 +58,8 @@ class AddModal extends React.Component {
         this.handleBlur = this.handleBlur.bind(this);
         this.handleDayChange = this.handleDayChange.bind(this);
         this.handleColorChange = this.handleColorChange.bind(this);
+        this.handleEditOkay = this.handleEditOkay.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     handleChange(e) {
@@ -111,7 +113,7 @@ class AddModal extends React.Component {
         eventData.startTime = eventData.startTime.split(':')[0] + eventData.startTime.split(':')[1];
         eventData.endTime = eventData.endTime.split(':')[0] + eventData.endTime.split(':')[1];
 
-        const { status, json } = await post('/timetable/0/events', eventData);
+        const { status, json } = await post(`/timetable/0/events/${this.state.data.id}`, eventData);
 
         console.log(status, json);
 
@@ -124,6 +126,23 @@ class AddModal extends React.Component {
 
     async handleEditOkay() {
         // TODO: Add editing capability
+
+        const eventData = {...this.state.data};
+        
+        if (!this.validate(eventData)) {
+            return false;
+        }
+
+        eventData.startTime = eventData.startTime.split(':')[0] + eventData.startTime.split(':')[1];
+        eventData.endTime = eventData.endTime.split(':')[0] + eventData.endTime.split(':')[1];
+
+        const { status, json } = await post(`/timetable/0/events/${this.state.data.id}/edit`, { event: eventData });
+        if (status === 200) { 
+            // this.close();
+        } else {
+            console.log(json?.error);
+            alert(json?.error);
+        }
     }
 
     validate(data) {
@@ -310,7 +329,7 @@ class AddModal extends React.Component {
                         <button type="button" className={`${styles.okayButton} primary`} onClick={this.props.mode === 'edit' ? this.handleEditOkay : this.handleOkay}>{this.props.mode === 'edit' ? <Icon.Edit2 strokeWidth={'1.5px'} className={`icon`} /> : <Icon.Plus className={`icon`} />}{this.props.mode === 'edit' ? 'Update class' : 'Add class'}</button>
                     </div>
                     <div className={styles.action}>
-                        {this.props.mode === 'edit' ? <button type="button" className={`primary ${styles.deleteButton} ${styles.okayButton}`} onClick={this.handleDelete}> <Icon.Trash2 strokeWidth={'1.5px'} className={`icon`} /> Delete class</button> : ''}
+                        {this.props.mode === 'edit' ? <button type="button" className={`negative`} onClick={this.handleDelete}> <Icon.Trash2 strokeWidth={'1.5px'} className={`icon`} /> Delete class</button> : ''}
                     </div>
                 </div>
             </div>

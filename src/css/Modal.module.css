@@ -96,7 +96,11 @@
     flex-direction: row-reverse;
 }
 
-.footer button.okayButton {
+.footer * {
+    margin: 0 0.2rem 0 0.2rem;
+}
+
+.action button {
     font-size: 1.2rem;
     font-variation-settings: "wght" 650;
 
@@ -105,6 +109,6 @@
     align-items: center;
 }
 
-.footer button.okayButton svg {
+.action button svg {
     margin-right: 0.5rem;
 }
