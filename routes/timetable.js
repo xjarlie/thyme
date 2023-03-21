@@ -257,6 +257,12 @@ router.post('/:userTimetableIndex/events/:eventID/edit', async (req, res) => {
 
         console.log(event, updated);
 
+        let convertedData = updated;
+        delete convertedData.subjectID;
+        delete convertedData.weekID;
+        delete convertedData.displayName;
+        delete convertedData.color;
+
         const updateEvent = await prisma.event.update({
             where: {
                 id: eventID

@@ -101,14 +101,16 @@
 }
 
 .action button {
-    font-size: 1.2rem;
+    font-size: 1rem !important;
     font-variation-settings: "wght" 650;
 
     padding: 0.75rem;
 
-    align-items: center;
+    display: flex;
+    align-items: center !important;
 }
 
 .action button svg {
     margin-right: 0.5rem;
+    width: 20px;
 }
