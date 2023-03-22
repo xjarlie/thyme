@@ -118,7 +118,9 @@ class AddModal extends React.Component {
         console.log(status, json);
 
         if (status === 200) { 
-            this.close();
+            this.close(() => {
+                // refresh timetable
+            });
         } else {
             alert(json?.error);
         }
@@ -138,7 +140,9 @@ class AddModal extends React.Component {
 
         const { status, json } = await post(`/timetable/0/events/${this.state.data.id}/edit`, { event: eventData });
         if (status === 200) { 
-            // this.close();
+            this.close(() => {
+                // refresh timetable
+            });
         } else {
             console.log(json?.error);
             alert(json?.error);
@@ -267,8 +271,8 @@ class AddModal extends React.Component {
         this.handleChange({ target: { name: 'color', value: value } });
     }
 
-    close() {
-        closeModal();
+    close(callback = () => {}) {
+        closeModal(callback);
     }
 
     render() {

@@ -4,6 +4,7 @@ import SuperHeader from "./SuperHeader";
 import styles from "../../../css/Timetable.module.css";
 import withLoaderData from "../../../lib/withLoaderData.js";
 import { get } from "../../../lib/fetch.js";
+import { global } from "../../../lib/global";
 
 class Timetable extends React.Component {
 
@@ -12,7 +13,7 @@ class Timetable extends React.Component {
         
 
         return (
-            <div className={styles.timetable}>
+            <div className={styles.timetable} key={global.refreshSeed}>
                 <SuperHeader loaderData={this.props.loaderData} />
                 <Week loaderData={this.props.loaderData} weekNum={0} />
             </div>

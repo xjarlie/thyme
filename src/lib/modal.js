@@ -24,11 +24,12 @@ function createModal(Modal, props={}) {
     return modal;
 }
 
-function closeModal() {
+function closeModal(callback = () => {}) {
 
     document.querySelector('#modalroot').firstChild.firstChild.classList.add(styles.closing);
     setTimeout(() => {
         root.unmount();
+        callback();
     }, 50)
     
 }
